@@ -1,0 +1,35 @@
+{
+  "name": "react-crash-course",
+  "private": true,
+  "proxy": "http://127.0.0.1:8000",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/josefin-sans": "^5.0.3",
+    "@fontsource/libre-baskerville": "^5.0.3",
+    "@fontsource/roboto": "^5.0.3",
+    "@jridgewell/sourcemap-codec": "^1.4.15",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.5",
+    "@mui/styled-engine-sc": "^5.12.0",
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.4.0",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-router-dom": "^6.13.0",
+    "styled-components": "^5.3.11"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.1.0",
+    "vite": "^3.1.0"
+  }
+}

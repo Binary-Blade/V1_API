@@ -1,0 +1,81 @@
+[
+  {
+    "_id": "6174f95483e4d942c2a54b51",
+    "name": "Organic Carrots",
+    "photo": "https://example.com/organic-carrots.jpg",
+    "description": "Fresh and crunchy organic carrots, perfect for salads and snacking.",
+    "slug": "organic-carrots",
+    "category": ["vegetable"],
+    "label": ["Euro-Leaf"],
+    "isSeason": true,
+    "isNewSeason": false,
+    "pricePerKg": 5.99,
+    "pricePerGram": 0.005,
+    "ratingsQuantity": 2,
+    "ratingsAverage": 4.5,
+    "farm": "6174f95483e4d942c2a54b4e",
+    "createdBy": "6174f95483e4d942c2a54b50",
+    "buyers": [
+      "6174f95483e4d942c2a54b50",
+      "6174f95483e4d942c2a54b52"
+    ]
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b56",
+    "name": "Mixed Salad Greens",
+    "photo": "https://example.com/mixed-salad-greens.jpg",
+    "description": "A delicious blend of organic salad greens, perfect for a healthy meal.",
+    "slug": "mixed-salad-greens",
+    "category": ["vegetable", "fruit"],
+    "label": ["Organic"],
+    "isSeason": true,
+    "isNewSeason": true,
+    "pricePerKg": 3.99,
+    "pricePerGram": 0.004,
+    "ratingsQuantity": 1,
+    "ratingsAverage": 5,
+    "farm": "6174f95483e4d942c2a54b4e",
+    "createdBy": "6174f95483e4d942c2a54b50",
+    "buyers": [
+      "6174f95483e4d942c2a54b50"
+    ]
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b57",
+    "name": "Grass-Fed Beef",
+    "photo": "https://example.com/grass-fed-beef.jpg",
+    "description": "Tender and flavorful grass-fed beef, raised with care and attention.",
+    "slug": "grass-fed-beef",
+    "category": ["meat"],
+    "label": ["EU-Red Label"],
+    "isSeason": false,
+    "isNewSeason": false,
+    "pricePerKg": 6.99,
+    "pricePerGram": 0.006,
+    "ratingsQuantity": 0,
+    "ratingsAverage": 0,
+    "farm": "6174f95483e4d942c2a54b4f",
+    "createdBy": "6174f95483e4d942c2a54b53",
+    "buyers": []
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b58",
+    "name": "Organic Apples",
+    "photo": "https://example.com/organic-apples.jpg",
+    "description": "Crisp and juicy organic apples, perfect for snacking and baking.",
+    "slug": "organic-apples",
+    "category": ["fruit", "meat"],
+    "label": ["PGI"],
+    "isSeason": true,
+    "isNewSeason": false,
+    "pricePerKg": 7.99,
+    "pricePerGram": 0.007,
+    "ratingsQuantity": 1,
+    "ratingsAverage": 4,
+    "farm": "6174f95483e4d942c2a54b4f",
+    "createdBy": "6174f95483e4d942c2a54b53",
+    "buyers": [
+      "6174f95483e4d942c2a54b52"
+    ]
+  }
+]

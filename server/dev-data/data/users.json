@@ -1,0 +1,68 @@
+[
+  {
+    "_id": "6174f95483e4d942c2a54b4e",
+    "name": "Jean Dupont",
+    "email": "jean.dupont@example.com",
+    "photo": "https://example.com/jean-dupont.jpg",
+    "password": "password123",
+    "passwordConfirm": "password123",
+    "active": true,
+    "role": "farmer",
+    "farm": "6174f95483e4d942c2a54b4e"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b4f",
+    "name": "Marie Martin",
+    "email": "marie.martin@example.com",
+    "photo": "https://example.com/marie-martin.jpg",
+    "password": "password123",
+    "passwordConfirm": "password123",
+    "active": true,
+    "role": "farmer",
+    "farm": "6174f95483e4d942c2a54b4f"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b50",
+    "name": "Paul Bernard",
+    "email": "paul.bernard@example.com",
+    "photo": "https://example.com/paul-bernard.jpg",
+    "password": "password123",
+    "passwordConfirm": "password123",
+    "active": true,
+    "role": "buyer",
+    "buyer": "6174f95483e4d942c2a54b50"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b51",
+    "name": "Sophie Petit",
+    "email": "sophie.petit@example.com",
+    "photo": "https://example.com/sophie-petit.jpg",
+    "password": "password123",
+    "passwordConfirm": "password123",
+    "active": true,
+    "role": "buyer",
+    "buyer": "6174f95483e4d942c2a54b51"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b52",
+    "name": "François Dubois",
+    "email": "francois.dubois@example.com",
+    "photo": "https://example.com/francois-dubois.jpg",
+    "password": "password123",
+    "passwordConfirm": "password123",
+    "active": true,
+    "role": "buyer",
+    "buyer": "6174f95483e4d942c2a54b52"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b53",
+    "name": "Isabelle Moreau",
+    "email": "isabelle.moreau@example.com",
+    "photo": "https://example.com/isabelle-moreau.jpg",
+    "password": "password123",
+    "passwordConfirm": "password123",
+    "active": true,
+    "role": "buyer",
+    "buyer": "6174f95483e4d942c2a54b53"
+  }
+]

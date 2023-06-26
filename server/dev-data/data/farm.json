@@ -1,0 +1,68 @@
+[
+  {
+    "_id": "6174f95483e4d942c2a54b4e",
+    "user": "6174f95483e4d942c2a54b4e",
+    "createdBy": "6174f95483e4d942c2a54b4e",
+    "farmName": "Green Valley Farm",
+    "numSIREN": 123456789,
+    "farmDescription": "Green Valley Farm is a family-owned farm specializing in organic vegetables and fruits.",
+    "farmHistory": "Established in 1985, Green Valley Farm has been providing fresh produce to the local community for over three decades.",
+    "farmImageCover": "https://example.com/green-valley-farm-cover.jpg",
+    "farmAddress": {
+      "type": "Point",
+      "coordinates": [43.610769, 3.876716],
+      "address": {
+        "street": "123 Green Valley Road",
+        "city": "Montpellier",
+        "state": "Occitanie",
+        "zipCode": "34000",
+        "country": "France"
+      }
+    },
+    "category": [
+      "vegetable",
+      "fruit"
+    ],
+    "label": [
+      "Euro-Leaf",
+      "Organic"
+    ],
+    "products": [
+      "6174f95483e4d942c2a54b57",
+      "6174f95483e4d942c2a54b58"
+    ]
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b4f",
+    "user": "6174f95483e4d942c2a54b4f",
+    "createdBy": "6174f95483e4d942c2a54b4f",
+    "farmName": "Sunny Meadows Ranch",
+    "numSIREN": 987654321,
+    "farmDescription": "Sunny Meadows Ranch is a sustainable farm producing high-quality fruits and meats.",
+    "farmHistory": "Founded in 1990, Sunny Meadows Ranch has been committed to responsible farming practices and animal welfare.",
+    "farmImageCover": "https://example.com/sunny-meadows-ranch-cover.jpg",
+    "farmAddress": {
+      "type": "Point",
+      "coordinates": [45.764043, 4.835659],
+      "address": {
+        "street": "456 Sunny Meadows Lane",
+        "city": "Lyon",
+        "state": "Auvergne-Rhône-Alpes",
+        "zipCode": "69000",
+        "country": "France"
+      }
+    },
+    "category": [
+      "fruit",
+      "meat"
+    ],
+    "label": [
+      "EU-Red Label",
+      "PGI"
+    ],
+    "products": [
+      "6174f95483e4d942c2a54b57",
+      "6174f95483e4d942c2a54b58"
+    ]
+  }
+]

@@ -1,0 +1,106 @@
+[
+    {
+      "_id": "6174f95483e4d942c2a54b4e",
+      "name": "Jean Dupont",
+      "email": "jean.dupont@example.com",
+      "photo": "https://example.com/jean-dupont.jpg",
+      "password": "password123",
+      "passwordConfirm": "password123",
+      "active": true,
+      "role": "farmer",
+      "farmName": "Green Valley Farm",
+      "numSIREN": 123456789,
+      "farmDescription": "Green Valley Farm is a family-owned farm specializing in organic vegetables and fruits.",
+      "farmHistory": "Established in 1985, Green Valley Farm has been providing fresh produce to the local community for over three decades.",
+      "farmImageCover": "https://example.com/green-valley-farm-cover.jpg",
+      "farmAddress": {
+        "type": "Point",
+        "coordinates": [43.610769, 3.876716],
+        "address": {
+          "street": "123 Green Valley Road",
+          "city": "Montpellier",
+          "state": "Occitanie",
+          "zipCode": "34000",
+          "country": "France"
+        }
+      },
+      "category": [
+        "vegetable",
+        "fruit"
+      ],
+      "label": [
+        "Euro-Leaf",
+        "Organic"
+      ],
+      "products": [
+        {
+          "_id": "6174f95483e4d942c2a54b57",
+          "name": "Grass-Fed Beef",
+          "photo": "https://example.com/grass-fed-beef.jpg",
+          "description": "Tender and flavorful grass-fed beef, raised with care and attention.",
+          "slug": "grass-fed-beef",
+          "category": ["meat"],
+          "label": ["EU-Red Label"],
+          "isSeason": false,
+          "isNewSeason": false,
+          "pricePerKg": 6.99,
+          "pricePerGram": 0.006,
+          "ratingsQuantity": 0,
+          "ratingsAverage": 0,
+          "farm": "6174f95483e4d942c2a54b4f"
+        },
+        {
+          "_id": "6174f95483e4d942c2a54b58",
+          "name": "Organic Apples",
+          "photo": "https://example.com/organic-apples.jpg",
+          "description": "Crisp and juicy organic apples, perfect for snacking and baking.",
+          "slug": "organic-apples",
+          "category": ["fruit"],
+          "label": ["PGI"],
+          "isSeason": true,
+          "isNewSeason": false,
+          "pricePerKg": 7.99,
+          "pricePerGram": 0.007,
+          "ratingsQuantity": 1,
+          "ratingsAverage": 4,
+          "farm": "6174f95483e4d942c2a54b4f"
+        }
+      ]
+    },
+    {
+      "_id": "6174f95483e4d942c2a54b50",
+      "name": "Paul Bernard",
+      "email": "paul.bernard@example.com",
+      "photo": "https://example.com/paul-bernard.jpg",
+      "password": "password123",
+      "passwordConfirm": "password123",
+      "active": true,
+      "role": "buyer",
+      "favoriteFarms": [
+        "60e7a5d5a3c1b20015a2b3c5"
+      ],
+      "phoneNumber": "+33123456789",
+      "dateOfBirth": "1990-01-01",
+      "adressBuyer": {
+        "type": "Point",
+        "coordinates": [44.937598, 4.838661],
+        "address": {
+          "street": "123 Main Street",
+          "city": "Valence",
+          "state": "Auvergne-Rhône-Alpes",
+          "zipCode": "75001",
+          "country": "France"
+        }
+      },
+      "paymentMethod": "creditCard",
+      "creditCard": {
+        "number": "1234567812345678",
+        "expirationDate": "2025-01-01",
+        "cvv": "123"
+      },
+      "preferences": {
+        "favoriteProducts": ["Organic Apples"],
+        "preferredDeliveryTimes": ["Morning"]
+      }
+    }
+  ]

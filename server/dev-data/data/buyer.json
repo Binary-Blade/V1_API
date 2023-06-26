@@ -1,0 +1,88 @@
+[
+  {
+    "_id": "6174f95483e4d942c2a54b50",
+    "createdBy": "6174f95483e4d942c2a54b50",
+    "favoriteFarms": [
+      "60e7a5d5a3c1b20015a2b3c5"
+    ],
+    "phoneNumber": "+33123456789",
+    "dateOfBirth": "1990-01-01",
+    "adressBuyer": {
+      "type": "Point",
+      "coordinates": [44.937598, 4.838661],
+      "address": {
+        "street": "123 Main Street",
+        "city": "Valence",
+        "state": "Auvergne-Rhône-Alpes",
+        "zipCode": "75001",
+        "country": "France"
+      }
+    },
+    "paymentMethod": "creditCard",
+    "creditCard": {
+      "number": "1234567812345678",
+      "expirationDate": "2025-01-01",
+      "cvv": "123"
+    },
+    "preferences": {
+      "favoriteProducts": ["Organic Apples"],
+      "preferredDeliveryTimes": ["Morning"]
+    }
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b51",
+    "createdBy": "6174f95483e4d942c2a54b51",
+    "favoriteFarms": [
+      "60e7a5d5a3c1b20015a2b3c3"
+    ],
+    "phoneNumber": "+33123456788",
+    "dateOfBirth": "1985-05-15",
+    "adressBuyer": {
+      "type": "Point",
+      "coordinates": [45.733793, 4.722672],
+      "address": {
+        "street": "456 Market Street",
+        "city": "Lyon",
+        "state": "Auvergne-Rhône-Alpes",
+        "zipCode": "69001",
+        "country": "France"
+      }
+    },
+    "paymentMethod": "debitCard",
+    "debitCard": {
+      "number": "2345678923456789",
+      "expirationDate": "2024-06-01",
+      "cvv": "456"
+    },
+    "preferences": {
+      "favoriteProducts": ["Organic Pears"],
+      "preferredDeliveryTimes": ["Afternoon"]
+    }
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b52",
+    "createdBy": "6174f95483e4d942c2a54b52",
+    "favoriteFarms": [
+      "60e7a5d5a3c1b20015a2b3c3"
+    ],
+    "phoneNumber": "+33123456790",
+    "dateOfBirth": "1995-06-20",
+    "adressBuyer": {
+      "type": "Point",
+      "coordinates": [43.441360, 5.481682],
+      "address": {
+        "street": "789 Park Avenue",
+        "city": "Marseille",
+        "state": "Provence-Alpes-Côte d'Azur",
+        "zipCode": "13001",
+        "country": "France"
+      }
+    },
+    "paymentMethod": "paypal",
+    "paypalAccount": "emily.buyer@example.com",
+    "preferences": {
+      "favoriteProducts": ["Organic Tomatoes"],
+      "preferredDeliveryTimes": ["Evening"]
+    }
+  }
+]

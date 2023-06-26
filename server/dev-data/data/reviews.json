@@ -1,0 +1,38 @@
+[
+  {
+    "_id": "6174f95483e4d942c2a54b61",
+    "review": "Great product! Highly recommended!",
+    "rating": 5,
+    "createdAt": "2023-06-14T08:00:00.000Z",
+    "createdBy": "6174f95483e4d942c2a54b50",
+    "product": "6174f95483e4d942c2a54b51",
+    "user": "6174f95483e4d942c2a54b50"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b62",
+    "review": "Fresh and flavorful tomatoes. Loved them!",
+    "rating": 4,
+    "createdAt": "2023-06-14T08:00:00.000Z",
+    "createdBy": "6174f95483e4d942c2a54b51",
+    "product": "6174f95483e4d942c2a54b51",
+    "user": "6174f95483e4d942c2a54b52"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b63",
+    "review": "Sweet and juicy blueberries. Highly recommend!",
+    "rating": 4,
+    "createdAt": "2023-06-14T08:00:00.000Z",
+    "createdBy": "6174f95483e4d942c2a54b52",
+    "product": "6174f95483e4d942c2a54b57",
+    "user": "6174f95483e4d942c2a54b51"
+  },
+  {
+    "_id": "6174f95483e4d942c2a54b64",
+    "review": "Delicious and tender beef. Worth trying!",
+    "rating": 4,
+    "createdAt": "2023-06-14T08:00:00.000Z",
+    "createdBy": "6174f95483e4d942c2a54b52",
+    "product": "6174f95483e4d942c2a54b58",
+    "user": "6174f95483e4d942c2a54b50"
+  }
+]
