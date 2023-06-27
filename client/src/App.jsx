@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
+import { motion } from "framer-motion"
 import theme from './ui/theme';
 import Button from '@mui/material/Button';
 import Product from './pages/Product';

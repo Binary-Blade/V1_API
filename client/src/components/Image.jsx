@@ -9,7 +9,13 @@ import theme from './../ui/theme';
 
 export default function ImgMediaCard() {
   return (
-    <Card sx={{ maxWidth: 500, bgcolor: theme.palette.background.secondary }}>
+    <Card
+      sx={{
+        maxWidth: 500,
+        bgcolor: theme.palette.background.secondary,
+        backgroundSize: 'contain',
+      }}
+    >
       <CardMedia
         component="img"
         alt="image"
