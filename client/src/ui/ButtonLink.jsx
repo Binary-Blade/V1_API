@@ -2,19 +2,19 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import theme from './theme';
 
-export default function ButtonLink() {
+export default function ButtonLink({children}) {
   return (
     <Button
       variant="contained"
       href="#contained-buttons"
       sx={{
-        width: 150,
+        width: 220,
         bgcolor: theme.palette.title.primary,
         color: theme.palette.title.secondary,
-        fontSize: 11,
+        fontSize: 15,
       }}
     >
-      Toutes nos fermes
+      {children}
     </Button>
   );
 }
