@@ -1,22 +1,43 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Image from './Image';
-import Grid from '@mui/material/Unstable_Grid2';
+import CardFarm from './CardFarms'; // assurez-vous d'importer le bon chemin
 import { Typography } from '@mui/material';
 import ButtonLink from '../ui/ButtonLink';
 import theme from '../ui/theme';
 
 export default function ResponsiveGrid() {
+  const farms = [
+    {
+      name: 'Ferme du Soleil Levant',
+      description: 'Une description de la Ferme du Soleil Levant.',
+    },
+    {
+      name: 'Ferme des Quatre Vents',
+      description: 'Une description de la Ferme des Quatre Vents.',
+    },
+    {
+      name: 'Ferme de la Vallée Verdoyante',
+      description: 'Une description de la Ferme de la Vallée Verdoyante.',
+    },
+    {
+      name: 'Ferme du Clair de Lune',
+      description: 'Une description de la Ferme du Clair de Lune.',
+    },
+  ];
+
   return (
     <>
       <Box
         sx={{
           flexGrow: 1,
-          display: 'grid',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
           columnGap: 2,
           rowGap: 2,
-          pt: 5,
+          pt: 10,
           pb: 10,
+          mx: 5,
         }}
       >
         <Typography
@@ -24,30 +45,47 @@ export default function ResponsiveGrid() {
           sx={{
             textAlign: 'center',
             color: theme.palette.title.primary,
+            marginBottom: 2,
           }}
         >
           LES NOUVEAUX FERMIERS
         </Typography>
-        <Grid
-          container
-          spacing={5}
-          columns={{ xs: 1, sm: 2, md: 2, lg: 4 }}
-          sx={{ py: 5, px: 5 }}
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+            py: 5,
+            px: 5,
+          }}
         >
-          {Array.from(Array(4)).map((_, index) => (
-            <Grid xs={1} sm={1} md={1} lg={1} key={index}>
-              <Image />
-            </Grid>
+          {farms.map((farm, index) => (
+            <Box
+              key={index}
+              sx={{
+                width: { xs: '100%', sm: '80%', md: '50%' },
+                px: 2,
+                py: 2,
+              }}
+            >
+              <CardFarm nameFarm={farm.name} describeFarm={farm.description} />
+            </Box>
           ))}
-        </Grid>
+        </Box>
+
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginTop: 2,
           }}
         >
-          <ButtonLink />
+          <ButtonLink>Toutes les fermes</ButtonLink>
         </Box>
       </Box>
     </>
