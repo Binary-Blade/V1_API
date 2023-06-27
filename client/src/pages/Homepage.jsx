@@ -1,16 +1,20 @@
 import React from 'react';
-
-import Footer from '../Layout/Footer/Footer';
-import NavBar from '../Layout/Header/MuiNavBar';
+import Footer from '../Layout/Footer';
+import NavBar from '../Layout/MuiNavBar';
 import NewFarmer from '../components/NewFarmer';
-import HpHeader from '../components/HomePageHeader';
+import HpHeader from '../components/Carousel';
+import News from '../components/News';
+import { Container } from '@mui/material';
 
 export default function Landingpage() {
   return (
     <>
       <NavBar />
-      <HpHeader/>
-      <NewFarmer />
+      <Container>
+        <HpHeader />
+        <NewFarmer />
+        <News />
+      </Container>
       <Footer />
     </>
   );

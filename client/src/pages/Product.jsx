@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Product.module.css';
-import NavBar from '../Layout/Header/MuiNavBar';
+import NavBar from '../Layout/MuiNavBar';
 import axios from 'axios'; // Assurez-vous d'avoir installé axios via npm
 
 export default function Product() {

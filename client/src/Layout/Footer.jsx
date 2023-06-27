@@ -7,7 +7,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import YouTubeIcon from '@mui/icons-material/YouTube';
-import theme from './../../ui/theme';
+import theme from '../ui/theme';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -37,7 +37,7 @@ export default function NestedGrid() {
     <Box
       sx={{
         flexGrow: 1,
-        position: 'fixed',
+        position: 'static',
         bottom: 0,
         left: 0,
         width: '100%',

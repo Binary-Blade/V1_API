@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../Layout/Header/MuiNavBar';
+import NavBar from '../Layout/MuiNavBar';
 
 export default function Farmer() {
   return (
