@@ -5,22 +5,22 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import theme from './../ui/theme';
+import theme from '../ui/theme';
 
-export default function ImgMediaCard() {
+export default function CardFarms({ nameFarm, describeFarm }) {
   return (
     <Card
       sx={{
         maxWidth: 500,
         bgcolor: theme.palette.background.secondary,
-        backgroundSize: 'contain',
+        backgroundSize: 'center',
       }}
     >
       <CardMedia
         component="img"
         alt="image"
-        height="180"
         image="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fG1hbnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80"
+        style={{ objectFit: 'contain', width: '100%' }}
       />
       <CardContent>
         <Typography
@@ -29,14 +29,13 @@ export default function ImgMediaCard() {
           component="div"
           color={theme.palette.title.primary}
         >
-          FERME
+          {nameFarm}
         </Typography>
         <Typography
           variant="body"
           sx={{ color: theme.palette.title.primary, fontSize: 12 }}
         >
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {describeFarm}
         </Typography>
       </CardContent>
       <CardActions>
