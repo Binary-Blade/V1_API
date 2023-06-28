@@ -2,11 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Carousel from 'react-material-ui-carousel';
-import ButtonLink from '../ui/ButtonLink';
-import theme from '../ui/theme';
-import ImageHomepage1 from './../../public/Bg_Image_Homepage1.png';
-import ImageHomepage2 from './../../public/Bg_Image_Homepage2.png';
-import ImageHomepage3 from './../../public/Bg_Image_Homepage3.png';
+import ButtonLink from './../../ui/ButtonLink';
+import theme from './../../ui/theme';
+import ImageHomepage1 from './../../../public/Bg_Image_Homepage1.png';
+import ImageHomepage2 from './../../../public/Bg_Image_Homepage2.png';
+import ImageHomepage3 from './../../../public/Bg_Image_Homepage3.png';
 
 export default function BoxSx() {
   const images = [ImageHomepage1, ImageHomepage2, ImageHomepage3];
@@ -39,7 +39,6 @@ export default function BoxSx() {
                 width: 450,
                 m: 6,
                 bgcolor: 'rgba(251, 242, 223, 0.9)',
-                color: '#FFF',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',

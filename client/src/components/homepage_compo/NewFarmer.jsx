@@ -2,8 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import CardFarm from './CardFarms'; // assurez-vous d'importer le bon chemin
 import { Typography } from '@mui/material';
-import ButtonLink from '../ui/ButtonLink';
-import theme from '../ui/theme';
+import ButtonLink from '../../ui/ButtonLink';
+import theme from '../../ui/theme';
 
 export default function ResponsiveGrid() {
   const farms = [
