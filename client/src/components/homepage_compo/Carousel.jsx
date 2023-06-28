@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Carousel from 'react-material-ui-carousel';
-import ButtonLink from './../../ui/ButtonLink';
+import ButtonLink from '../../ui/Button/ButtonLink';
 import theme from './../../ui/theme';
 import ImageHomepage1 from './../../../public/Bg_Image_Homepage1.png';
 import ImageHomepage2 from './../../../public/Bg_Image_Homepage2.png';
