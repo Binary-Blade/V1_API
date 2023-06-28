@@ -17,7 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: '#3F7D61',
 }));
 
-export default function NestedGrid() {
+export default function Footer({ footerPosition = 'static' }) {
   // TODO IMPORT IN COMPONENTS
   const SocialIcon = ({ IconComponent, href }) => (
     <Grid item>
@@ -37,7 +37,7 @@ export default function NestedGrid() {
     <Box
       sx={{
         flexGrow: 1,
-        position: 'static',
+        position: footerPosition,
         bottom: 0,
         left: 0,
         width: '100%',
