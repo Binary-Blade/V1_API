@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './ui/theme';
 import Button from '@mui/material/Button';
-import Product from './pages/Product';
+import ProductFarmer from './pages/AllProductsFarmer';
 import Homepage from './pages/Homepage';
 import Contact from './pages/Contact';
 import Farmers from './pages/Farmers';
@@ -18,7 +18,7 @@ export default function MyApp() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
-            <Route path="products" element={<Product />} />
+            <Route path="products" element={<ProductFarmer />} />
             <Route path="homepage" element={<Homepage />} />
             <Route path="contact" element={<Contact />} />
             <Route path="farmers" element={<Farmers />} />
