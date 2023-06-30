@@ -2,9 +2,10 @@ import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './ui/theme';
-import Button from '@mui/material/Button';
 import ProductFarmer from './pages/AllProductsFarmer';
+import ProductPage from './pages/ProductPage';
 import Homepage from './pages/Homepage';
+import MyCards from './pages/MyCards';
 import Contact from './pages/Contact';
 import Farmers from './pages/Farmers';
 import '@fontsource/roboto/300.css';
@@ -18,8 +19,10 @@ export default function MyApp() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
-            <Route path="products" element={<ProductFarmer />} />
             <Route path="homepage" element={<Homepage />} />
+            <Route path="products" element={<ProductFarmer />} />
+            <Route path="farmers/product" element={<ProductPage />} />
+            <Route path="cards" element={<MyCards />} />
             <Route path="contact" element={<Contact />} />
             <Route path="farmers" element={<Farmers />} />
           </Routes>
