@@ -1,48 +1,45 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import React from 'react';
 import ButtonLink from '../../ui/Button/ButtonLink';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import theme from '../../ui/theme';
-
-const Item = (props) => (
-  <Paper
-    sx={{
-      backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-      ...theme.typography.body2,
-      padding: theme.spacing(1),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-      ...props.sx,
-    }}
-  >
-    {props.children}
-  </Paper>
-);
+import { Box, Typography, CardMedia, Grid, Paper } from '@mui/material';
 
 export default function Gap() {
+  const news = [
+    {
+      title: 'News 1',
+      content: 'Some exciting news...',
+      imagePath: '/path-to-your-image-3.png',
+    },
+    {
+      title: 'News 2',
+      content: 'Some more exciting news...',
+      imagePath: '/path-to-your-image-4.png',
+    },
+    // Add more news here...
+  ];
   return (
-    <Box
-      sx={{ flexGrow: 1, p: 5, bgcolor: theme.palette.background.secondary }}
-    >
-      <Grid container spacing={5}>
-        <Grid item xs={12} sm={12} md={6}>
-          <Item>1</Item>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6}>
-          <Grid container direction="column" spacing={5}>
-            <Grid item xs>
-              <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-                <Item>2</Item>
+    <Box my={4}>
+      <Typography variant="h4" gutterBottom>
+        News
+      </Typography>
+      <Grid container spacing={3}>
+        {news.map((item, index) => (
+          <Grid item xs={12} sm={6} key={index}>
+            <Paper variant="outlined" square>
+              <CardMedia
+                component="img"
+                height="140"
+                image={item.imagePath}
+                alt={item.title}
+              />
+              <Box p={2}>
+                <Typography variant="h5">{item.title}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {item.content}
+                </Typography>
               </Box>
-            </Grid>
-            <Grid item xs>
-              <Box sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-                <Item>3</Item>
-              </Box>
-            </Grid>
+            </Paper>
           </Grid>
-        </Grid>
+        ))}
       </Grid>
       <ButtonLink sx={{ JustifyContent: 'center' }}>Toutes les news</ButtonLink>
     </Box>
