@@ -16,13 +16,9 @@ export default function Farmer() {
         <h1>A dedicated team to grow your company</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipiscing.</p>
         <Tab_Farm />
-        <FarmPresent
-          numberCards={9}
-          childrenCards={<FarmCards />}
-          button={<ButtonMap>Carte interactive</ButtonMap>}
-        />
+        <FarmCards />
       </Container>
-      <Footer footerPosition="contain" />
+      <Footer footerPosition="fixed" />
     </>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../Layout/MuiNavBar';
 import Footer from '../Layout/Footer';
 import { Button, Container } from '@mui/material';
-import PresentationProduct from './../components/product_compo/ProductPresentation';
+import PresentationProduct from '../components/productsFarmer_compo/AllProductsFarmer';
 // TODO farmPresent NumberCards = Connect to the API based on the number of Farms active
 export default function Farmer() {
   return (
