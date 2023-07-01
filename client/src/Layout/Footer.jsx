@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
+import { Box, Paper, Typography, IconButton } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -17,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: '#3F7D61',
 }));
 
-export default function Footer({ footerPosition = 'static' }) {
+export default function Footer({ footerPosition = 'contain' }) {
   // TODO IMPORT IN COMPONENTS
   const SocialIcon = ({ IconComponent, href }) => (
     <Grid item>
@@ -42,9 +41,9 @@ export default function Footer({ footerPosition = 'static' }) {
         left: 0,
         width: '100%',
         transform: 'translateX(0)',
-        margin: 0,
         py: 5,
         px: 8,
+        mt: 3,
         backgroundColor: theme.palette.background.secondary,
       }}
     >
