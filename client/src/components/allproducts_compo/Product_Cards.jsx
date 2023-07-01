@@ -1,109 +1,132 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import theme from '../../ui/theme';
+import React from 'react';
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+  Avatar,
+  Chip,
+} from '@mui/material';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
+import { styled } from '@mui/system';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
+const products = [
+  {
+    id: 1,
+    name: 'Product 1',
+    description: 'Description 1',
+    imagePath: '/path-to-your-image-1.png',
+    price: '$29.99',
+    category: 'Viande',
+    farmer: {
+      name: 'Farm 1',
+      avatarPath: '/path-to-farmer-avatar-1.png',
+    },
+    labels: ['Bio', 'Vegan'],
+  },
+  {
+    id: 2,
+    name: 'Product 2',
+    description: 'Description 2',
+    imagePath: '/path-to-your-image-2.png',
+    price: '$19.99',
+    category: 'Légumes',
+    farmer: {
+      name: 'Farm 2',
+      avatarPath: '/path-to-farmer-avatar-2.png',
+    },
+    labels: ['Sans Gluten'],
+  },
+  // Add more products here...
+];
+const LabelIcon = {
+  Vegan: <FastfoodIcon />,
+  'Sans Gluten': <LocalPizzaIcon />,
+};
+
+const CustomAvatar = styled(Avatar)(({ theme }) => ({
+  width: theme.spacing(3),
+  height: theme.spacing(3),
+  marginRight: theme.spacing(1),
 }));
 
-export default function FarmsCard() {
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
+const ProductPage = () => {
   return (
-    <Card
-      sx={{
-        maxWidth: 500,
-        bgcolor: theme.palette.background.secondary,
-        backgroundSize: 'center',
-      }}
-    >
-      <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-        titleTypographyProps={{
-          variant: 'h4',
-          color: theme.palette.title.primary,
-        }}
-        subheaderTypographyProps={{
-          variant: 'body',
-          color: theme.palette.title.primary,
-        }}
-      />
-      <CardMedia
-        component="img"
-        height="194"
-        image="https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1378&q=80"
-        alt="Paella dish"
-        style={{ objectFit: 'contain', width: '100%' }}
-      />
-      <CardContent>
-        <Typography
-          variant="body"
-          color={theme.palette.title.primary}
-          sx={{ fontSize: 12 }}
-        >
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+    <Container>
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Our Products
         </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography
-            paragraph
-            variant="body"
-            color={theme.palette.title.primary}
-            sx={{ fontSize: 12 }}
-          >
-            Method:
-          </Typography>
-          {/* More paragraphs */}
-        </CardContent>
-      </Collapse>
-    </Card>
+        <Grid container spacing={3}>
+          {products.map((product) => (
+            <Grid item xs={12} sm={6} md={4} key={product.id}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={product.imagePath}
+                  alt={product.name}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h6" component="div">
+                    {product.name}
+                  </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box display="flex" alignItems="center">
+                      <CustomAvatar
+                        src={product.farmer.avatarPath}
+                        alt={product.farmer.name}
+                      />
+                      <Typography variant="body2" color="text.secondary">
+                        {product.farmer.name}
+                      </Typography>
+                    </Box>
+                    <Typography variant="h6">{product.price}</Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary" mt={1}>
+                    {product.description}
+                  </Typography>
+                  <Box sx={{ mt: 2, mb: 1 }}>
+                    {product.labels.map((label) => (
+                      <Chip
+                        icon={LabelIcon[label]}
+                        label={label}
+                        variant="outlined"
+                        sx={{ mr: 1, mt: 1 }}
+                        key={label}
+                      />
+                    ))}
+                  </Box>
+                  <Box sx={{ mt: 2 }}>
+                    <Button
+                      startIcon={<ShoppingCartIcon />}
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      fullWidth
+                    >
+                      Add to Cart
+                    </Button>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </Container>
   );
-}
+};
+
+export default ProductPage;
