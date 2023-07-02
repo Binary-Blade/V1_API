@@ -1,75 +1,45 @@
-import * as React from 'react';
-import {
-  Container,
-  Box,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-} from '@mui/material';
+import React from "react";
+import { Container, Typography, Box, Grid, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
-export default function OrderConfirmationPage() {
+const OrderConfirmationPage = () => {
   return (
     <Container>
-      <Box sx={{ mt: 4, mb: 2 }}>
+      <Box my={4} textAlign="center">
         <Typography variant="h4" gutterBottom>
           Order Confirmation
         </Typography>
-      </Box>
+        <CheckCircleOutlineIcon style={{ fontSize: 100, color: '#4caf50' }} />
+        <Typography variant="h5" gutterBottom>
+          Thank you for your purchase!
+        </Typography>
+        <Typography variant="subtitle1">
+          Your order has been confirmed and your receipt has been sent to your email. 
+        </Typography>
+        <Typography variant="subtitle1">
+          You will receive another email when your order has been shipped.
+        </Typography>
 
-      <Box>
-        <Typography variant="h6" gutterBottom>
-          Thank you for your order!
-        </Typography>
-        <Typography>
-          We've received your order and will begin processing it soon. Your
-          order details are below.
-        </Typography>
-      </Box>
-
-      <Box mt={4}>
-        <Typography variant="h6" gutterBottom>
-          Delivery Address
-        </Typography>
-        <Typography>
-          John Doe
-          <br />
-          123 Main St.
-          <br />
-          City, State, Postal Code
-          <br />
-          Country
-        </Typography>
-      </Box>
-
-      <Box mt={4}>
-        <Typography variant="h6" gutterBottom>
-          Order Summary
-        </Typography>
-        <List>
-          {/* Repeat ListItem for each item in the order */}
-          <ListItem>
-            <ListItemText primary="Product 1" secondary="Quantity: 1" />
-            <Typography variant="body2">$49.99</Typography>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Product 2" secondary="Quantity: 2" />
-            <Typography variant="body2">$89.98</Typography>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Total" />
-            <Typography variant="subtitle1">$139.97</Typography>
-          </ListItem>
-        </List>
-      </Box>
-
-      <Box mt={4}>
-        <Typography>
-          Your order will be shipped to the address you provided within 2-3
-          business days. You will receive a confirmation email with tracking
-          information once your order has shipped.
-        </Typography>
+        <Grid container spacing={3} justifyContent="center" alignItems="center" direction="column">
+          <Grid item xs={12}>
+            <Box mt={4}>
+              <Button component={Link} to="/orderdetails" variant="contained" color="primary" size="large" >
+                View Order Details
+              </Button>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box mt={2}>
+              <Button component={Link} to="/products" variant="contained" color="secondary" size="large">
+                Continue Shopping
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   );
-}
+};
+
+export default OrderConfirmationPage;
