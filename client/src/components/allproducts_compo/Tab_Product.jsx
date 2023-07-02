@@ -63,6 +63,7 @@ export default function ScrollableTabsButtonAuto() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          pb: 2,
         }}
       >
         <Tab label="All" sx={{ fontSize: 12 }} />
