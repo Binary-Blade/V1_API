@@ -13,7 +13,7 @@ export default function AllProductsFromFarmer() {
       <Container>
         <ImageHeader />
         <Tab_Product />
-        <ProductCards/>
+        <ProductCards />
       </Container>
       <Footer footerPosition="contain" />
     </>
