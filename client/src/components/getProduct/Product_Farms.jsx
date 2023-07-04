@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -18,8 +20,6 @@ import { Link } from 'react-router-dom';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { getProducts } from '../../api/ApiProducts';
-import { styled } from '@mui/system';
 
 const LabelIcon = {
   'Euro-Leaf': <FastfoodIcon />,
@@ -28,31 +28,66 @@ const LabelIcon = {
   PGI: <LocalPizzaIcon />,
 };
 
-const CustomAvatar = styled(Avatar)(({ theme }) => ({
-  width: theme.spacing(3),
-  height: theme.spacing(3),
-  marginRight: theme.spacing(1),
-}));
-
 const ProductPage = () => {
   const [cartCount, setCartCount] = useState(0);
   const [products, setProducts] = useState([]);
 
-  const handleAddToCart = () => {
-    setCartCount((prevCount) => prevCount + 1);
+  const handleAddToCart = async (productId) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(
+        `http://127.0.0.1:8000/api_v1/products/cart`,
+        {
+          product: productId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setCartCount((prevCount) => prevCount + 1);
+    } catch (err) {
+      if (err.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(err.response.data);
+        console.log(err.response.status);
+        console.log(err.response.headers);
+      } else if (err.request) {
+        // The request was made but no response was received
+        console.log(err.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', err.message);
+      }
+    }
+  };
+
+  const getProducts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(`http://127.0.0.1:8000/api_v1/products`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return res.data.data;
+    } catch (err) {
+      console.error(err);
+      return []; // return empty array in case of error
+    }
   };
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const data = await getProducts();
-        setProducts(data);
-      } catch (error) {
-        console.error(error);
-      }
+    const fetchData = async () => {
+      const data = await getProducts();
+      setProducts(data);
     };
 
-    fetchProducts();
+    fetchData();
   }, []);
 
   return (
@@ -112,7 +147,7 @@ const ProductPage = () => {
                       color="primary"
                       size="small"
                       fullWidth
-                      onClick={handleAddToCart}
+                      onClick={() => handleAddToCart(product._id)}
                     >
                       Add to Cart
                     </Button>

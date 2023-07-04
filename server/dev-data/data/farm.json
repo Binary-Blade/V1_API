@@ -7,7 +7,7 @@
     "numSIREN": 123456789,
     "farmDescription": "Green Valley Farm is a family-owned farm specializing in organic vegetables and fruits.",
     "farmHistory": "Established in 1985, Green Valley Farm has been providing fresh produce to the local community for over three decades.",
-    "farmImageCover": "https://example.com/green-valley-farm-cover.jpg",
+    "farmImageCover": "https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1678&q=80",
     "farmAddress": {
       "type": "Point",
       "coordinates": [43.610769, 3.876716],
@@ -40,7 +40,7 @@
     "numSIREN": 987654321,
     "farmDescription": "Sunny Meadows Ranch is a sustainable farm producing high-quality fruits and meats.",
     "farmHistory": "Founded in 1990, Sunny Meadows Ranch has been committed to responsible farming practices and animal welfare.",
-    "farmImageCover": "https://example.com/sunny-meadows-ranch-cover.jpg",
+    "farmImageCover": "https://images.unsplash.com/photo-1500076656116-558758c991c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
     "farmAddress": {
       "type": "Point",
       "coordinates": [45.764043, 4.835659],

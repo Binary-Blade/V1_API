@@ -12,7 +12,12 @@ const cors = require('cors');
 // Calling express
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:5173', // replace with the domain of your frontend application
+    credentials: true,
+  })
+);
 // EXPORT
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');

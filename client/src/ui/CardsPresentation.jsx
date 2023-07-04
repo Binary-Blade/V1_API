@@ -9,7 +9,7 @@ export default function PresentationCards({
   const cards = Array.from({ length: numberCards }, (_, i) => i + 1);
 
   return (
-    <Grid container spacing={2}sx={{ py: 6}}>
+    <Grid container spacing={2} sx={{ py: 6 }}>
       {cards.map((card, index) => (
         <Grid item xs={12} sm={6} md={3} key={index}>
           {childrenCards}

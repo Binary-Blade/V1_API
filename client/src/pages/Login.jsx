@@ -1,5 +1,6 @@
 // LoginPage.js
 import React from 'react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography, Container } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,25 +8,20 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function LoginPage() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
-
   const onSubmit = async (data) => {
     try {
-      const response = await fetch('http://localhost:8000/api_v1/users/login', {
+      const response = await axios({
         method: 'POST',
+        url: 'http://localhost:8000/api_v1/users/login', // replace with your API endpoint
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        data: data,
       });
 
-      const userData = await response.json();
-
-      // Perform additional logic here...
-      if (response.ok) {
+      if (response.data.status === 'success') {
         // replace the current page in the history stack and navigate to homepage
         navigate('/homepage', { replace: 'true' });
-      } else {
-        // handle login error...
       }
     } catch (error) {
       console.error(error);

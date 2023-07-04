@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import theme from './../../ui/theme';
+import theme from '../../ui/theme';
 import Image from './../../../public/Bg_Image_Homepage1.png';
 
 const BoxSx = () => {

@@ -1,9 +1,26 @@
 const express = require('express');
 const productController = require('../controllers/productController');
-// const authController = require('../controllers/authController');
+const cartController = require('../controllers/cartController');
+const paymentController = require('../controllers/paymentController');
+const authController = require('../controllers/authController');
 const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
+
+router
+  .route('/cart')
+  .get(authController.protect, cartController.getCart)
+  .post(authController.protect, cartController.addToCart);
+
+router
+  .route('/cart/:productId')
+  .delete(authController.protect, cartController.deleteProductFromCartById);
+
+router.post(
+  '/checkout-session/:cartId',
+  authController.protect,
+  paymentController.getCheckoutSession
+);
 
 router.use('/:productId/reviews', reviewRouter);
 // router.use(authController.protect);

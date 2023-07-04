@@ -1,12 +1,9 @@
-// PARENT OF :
-//CHILD OF: userModel.js
 const mongoose = require('mongoose');
 const geoLocation = require('../utils/geoLocationModel');
 
 const buyerSchema = new mongoose.Schema(
   {
     _id: {
-      // link user id buyer to the buyer account
       type: mongoose.Schema.ObjectId,
       auto: false,
     },
@@ -17,7 +14,7 @@ const buyerSchema = new mongoose.Schema(
     favoriteFarms: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'Farm', // Update this reference to match the correct model name
+        ref: 'Farm',
       },
     ],
     phoneNumber: {
@@ -26,54 +23,49 @@ const buyerSchema = new mongoose.Schema(
     dateOfBirth: {
       type: Date,
     },
-    adressBuyer: geoLocation,
-    // billingAddress: {
-    //   type: addressSchema,
-    // },
-    // shippingAddress: {
-    //   type: addressSchema,
-    // },
+    addressBuyer: geoLocation,
+    cartItems: [
+      {
+        product: {
+          type: mongoose.Schema.ObjectId,
+          ref: 'Product',
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+      },
+    ],
     paymentMethod: {
       type: String,
       enum: ['creditCard', 'debitCard', 'paypal'],
     },
-    creditCard: {
+    card: {
       number: {
         type: String,
         required: function () {
-          return this.paymentMethod === 'creditCard';
+          return (
+            this.paymentMethod === 'creditCard' ||
+            this.paymentMethod === 'debitCard'
+          );
         },
       },
       expirationDate: {
         type: Date,
         required: function () {
-          return this.paymentMethod === 'creditCard';
+          return (
+            this.paymentMethod === 'creditCard' ||
+            this.paymentMethod === 'debitCard'
+          );
         },
       },
       cvv: {
         type: String,
         required: function () {
-          return this.paymentMethod === 'creditCard';
-        },
-      },
-    },
-    debitCard: {
-      number: {
-        type: String,
-        required: function () {
-          return this.paymentMethod === 'debitCard';
-        },
-      },
-      expirationDate: {
-        type: Date,
-        required: function () {
-          return this.paymentMethod === 'debitCard';
-        },
-      },
-      cvv: {
-        type: String,
-        required: function () {
-          return this.paymentMethod === 'debitCard';
+          return (
+            this.paymentMethod === 'creditCard' ||
+            this.paymentMethod === 'debitCard'
+          );
         },
       },
     },
@@ -96,22 +88,9 @@ const buyerSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
 buyerSchema.index({ buyerAddress: '2dsphere' });
 
-// buyerSchema.virtual('geolocation').get(function () {
-//   return {
-//     type: this.user.geolocation.type,
-//     coordinates: this.user.geolocation.coordinates,
-//     address: this.user.geolocation.address,
-//   };
-// });
-
-// buyerSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: 'user',
-//     select: 'geolocation',
-//   });
-//   next();
-// });
 const Buyer = mongoose.model('Buyer', buyerSchema);
+
 module.exports = Buyer;

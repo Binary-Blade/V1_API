@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Container,
   Typography,
@@ -16,18 +17,56 @@ import {
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Checkout from './Checkout'; // import the Checkout component
 
 const CartPage = () => {
-  const cartItems = [
-    { id: 1, name: 'Product 1', price: '$20', quantity: 2 },
-    { id: 2, name: 'Product 2', price: '$30', quantity: 1 },
-    { id: 3, name: 'Product 3', price: '$40', quantity: 3 },
-  ];
+  const [cartItems, setCartItems] = useState([]);
+  const [cartId, setCartId] = useState(null); // Add this line to create a new state for the cart id
+  const [totalCost, setTotalCost] = useState(0);
 
-  const totalAmount = cartItems.reduce(
-    (total, item) => total + parseFloat(item.price.slice(1)) * item.quantity,
-    0
-  );
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const res = await axios.get(
+          `http://127.0.0.1:8000/api_v1/products/cart`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setCartItems(res.data.data.cart.products);
+        setCartId(res.data.data.cart._id);
+        // Set the total cost of the cart here
+        setTotalCost(res.data.data.cart.totalCost);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchCart();
+  }, []);
+
+  const deleteItem = async (productId) => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.delete(
+        `http://127.0.0.1:8000/api_v1/products/cart/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Remove the deleted item from the cartItems state
+      setCartItems(cartItems.filter((item) => item.product._id !== productId));
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Container>
@@ -39,15 +78,24 @@ const CartPage = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <List>
-              {cartItems.map((item) => (
-                <ListItem key={item.id}>
+              {cartItems.map((item, index) => (
+                <ListItem key={`${item.product._id}-${index}`}>
                   <ListItemText
-                    primary={item.name}
-                    secondary={`Price: ${item.price}, Quantity: ${item.quantity}`}
+                    primary={item.product.name}
+                    secondary={`Price per kg: $${
+                      item.product.pricePerKg
+                    }, Quantity: ${item.quantity}, Total: $${(
+                      item.product.pricePerKg * item.quantity
+                    ).toFixed(2)}`}
                   />
-                  <IconButton edge="end" aria-label="delete">
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => deleteItem(item.product._id)}
+                  >
                     <DeleteIcon />
                   </IconButton>
+                  {/* Pass productId as prop to Checkout component */}
                 </ListItem>
               ))}
             </List>
@@ -57,19 +105,11 @@ const CartPage = () => {
             <Card>
               <CardContent>
                 <Typography variant="h6">
-                  Total: ${totalAmount.toFixed(2)}
+                  Total: ${totalCost.toFixed(2)}
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button
-                  component={Link}
-                  to="/checkout"
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                >
-                  Checkout
-                </Button>
+                <Checkout cartId={cartId} />
               </CardActions>
             </Card>
           </Grid>

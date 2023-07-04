@@ -2,7 +2,7 @@
   {
     "_id": "6174f95483e4d942c2a54b51",
     "name": "Organic Carrots",
-    "photo": "https://example.com/organic-carrots.jpg",
+    "photo": "https://images.unsplash.com/photo-1589927986089-35812388d1f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
     "description": "Fresh and crunchy organic carrots, perfect for salads and snacking.",
     "slug": "organic-carrots",
     "category": ["vegetable"],
@@ -23,7 +23,7 @@
   {
     "_id": "6174f95483e4d942c2a54b56",
     "name": "Mixed Salad Greens",
-    "photo": "https://example.com/mixed-salad-greens.jpg",
+    "photo": "https://images.unsplash.com/photo-1556781366-336f8353ba7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80",
     "description": "A delicious blend of organic salad greens, perfect for a healthy meal.",
     "slug": "mixed-salad-greens",
     "category": ["vegetable", "fruit"],
@@ -43,7 +43,7 @@
   {
     "_id": "6174f95483e4d942c2a54b57",
     "name": "Grass-Fed Beef",
-    "photo": "https://example.com/grass-fed-beef.jpg",
+    "photo": "https://images.unsplash.com/photo-1602473812169-ede177b00aea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
     "description": "Tender and flavorful grass-fed beef, raised with care and attention.",
     "slug": "grass-fed-beef",
     "category": ["meat"],
@@ -61,7 +61,7 @@
   {
     "_id": "6174f95483e4d942c2a54b58",
     "name": "Organic Apples",
-    "photo": "https://example.com/organic-apples.jpg",
+    "photo": "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
     "description": "Crisp and juicy organic apples, perfect for snacking and baking.",
     "slug": "organic-apples",
     "category": ["fruit", "meat"],
