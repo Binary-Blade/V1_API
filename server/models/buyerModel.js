@@ -36,38 +36,12 @@ const buyerSchema = new mongoose.Schema(
         },
       },
     ],
+    stripeCustomerId: {
+      type: String,
+    },
     paymentMethod: {
       type: String,
-      enum: ['creditCard', 'debitCard', 'paypal'],
-    },
-    card: {
-      number: {
-        type: String,
-        required: function () {
-          return (
-            this.paymentMethod === 'creditCard' ||
-            this.paymentMethod === 'debitCard'
-          );
-        },
-      },
-      expirationDate: {
-        type: Date,
-        required: function () {
-          return (
-            this.paymentMethod === 'creditCard' ||
-            this.paymentMethod === 'debitCard'
-          );
-        },
-      },
-      cvv: {
-        type: String,
-        required: function () {
-          return (
-            this.paymentMethod === 'creditCard' ||
-            this.paymentMethod === 'debitCard'
-          );
-        },
-      },
+      enum: ['creditCard', 'debitCard', 'paypal', 'stripe'],
     },
     paypalAccount: {
       type: String,

@@ -1,5 +1,6 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Cart = require('../models/CartModel');
+const Payment = require('../models/Payment');
 const catchAsync = require('../utils/catchAsync');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
@@ -24,19 +25,15 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
         product_data: {
           name: item.product.name,
           description: item.product.description,
+          metadata: {
+            productId: item.product._id.toString(),
+          },
         },
-        unit_amount: Math.round(item.product.pricePerKg * 100), // Stripe expects the price in cents
+        unit_amount: Math.round(item.product.pricePerKg * 100),
       },
       quantity: item.quantity,
     };
   });
-  console.log(line_items);
-  console.log(
-    line_items.reduce(
-      (total, item) => total + item.price_data.unit_amount * item.quantity,
-      0
-    ) / 100
-  ); // total price in dollars
 
   // 3) Create checkout session
   const session = await stripe.checkout.sessions.create({
@@ -44,11 +41,26 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     mode: 'payment',
     success_url: `${req.protocol}://${req.get(
       'host'
-    )}/products?session_id={CHECKOUT_SESSION_ID}`,
+    )}/api_v1/cart/orderDetails/${cart.id}?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${req.protocol}://${req.get('host')}/cards`,
     customer_email: req.user.email,
     line_items: line_items,
   });
+
+  // Save the session ID to the database
+  const payment = new Payment({
+    user: req.user.id,
+    order: cart.id,
+    amount: session.amount_total,
+    paymentMethod: 'stripe',
+    paymentStatus: 'pending',
+    stripeSessionId: session.id, // Add this field to your Payment model
+  });
+  await payment.save();
+
+  // Set cart status to "processing"
+  cart.status = 'processing';
+  await cart.save();
 
   // 4) Create session as response
   res.status(200).json({

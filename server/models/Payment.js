@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const paymentSchema = new Schema({
+const paymentSchema = new mongoose.Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -19,7 +19,7 @@ const paymentSchema = new Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ['credit_card', 'debit_card', 'paypal', 'bank_transfer'],
+    enum: ['credit_card', 'debit_card', 'paypal', 'bank_transfer', 'stripe'],
     required: true,
   },
   paymentStatus: {

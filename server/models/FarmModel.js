@@ -28,6 +28,9 @@ const farmSchema = new mongoose.Schema(
     farmImageCover: {
       type: String,
     },
+    stripeAccountId: {
+      type: String,
+    },
     farmAddress: geoLocationSchema,
     category: {
       type: [categorySchema],

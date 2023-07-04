@@ -19,11 +19,6 @@
       }
     },
     "paymentMethod": "creditCard",
-    "creditCard": {
-      "number": "1234567812345678",
-      "expirationDate": "2025-01-01",
-      "cvv": "123"
-    },
     "preferences": {
       "favoriteProducts": ["Organic Apples"],
       "preferredDeliveryTimes": ["Morning"]
@@ -49,11 +44,6 @@
       }
     },
     "paymentMethod": "debitCard",
-    "debitCard": {
-      "number": "2345678923456789",
-      "expirationDate": "2024-06-01",
-      "cvv": "456"
-    },
     "preferences": {
       "favoriteProducts": ["Organic Pears"],
       "preferredDeliveryTimes": ["Afternoon"]

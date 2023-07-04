@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import {
   Container,
   Typography,
@@ -26,29 +27,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const OrderDetailsPage = () => {
-  const orderDetails = {
-    orderNumber: '1234567890',
-    date: '01/07/2023',
-    total: '$100',
-    products: [
-      { name: 'Product 1', price: '$20', quantity: 2 },
-      { name: 'Product 2', price: '$30', quantity: 3 },
-    ],
-  };
+const OrderDetailsPage = (props) => {
+  // Assuming orderId and sessionId are passed as props
+  const [orderDetails, setOrderDetails] = useState({
+    orderId: null,
+    session_id: null,
+    ...otherFields,
+  });
+  useEffect(() => {
+    const { orderId, sessionId } = props; // Destructure orderId and sessionId from props
+
+    const url = `api_v1/cart/orderDetails/${orderId}?session_id=${sessionId}`;
+
+    axios
+      .get(url)
+      .then((response) => setOrderDetails(response.data))
+      .catch((error) => console.error('Error:', error));
+  }, []); // Empty dependency array to run only on component mount
 
   return (
     <Container>
       <Box my={4}>
-
         <Typography variant="h4" gutterBottom>
           Order Details
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
-          Order Number: {orderDetails.orderNumber}
+          Order ID: {orderDetails.orderId}
         </Typography>
         <Typography variant="subtitle1" gutterBottom>
-          Order Date: {orderDetails.date}
+          Session ID: {orderDetails.session_id}
         </Typography>
 
         <TableContainer component={Paper} style={{ marginTop: '20px' }}>

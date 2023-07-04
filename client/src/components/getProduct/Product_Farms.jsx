@@ -36,7 +36,7 @@ const ProductPage = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.post(
-        `http://127.0.0.1:8000/api_v1/products/cart`,
+        `http://127.0.0.1:8000/api_v1/cart`,
         {
           product: productId,
         },

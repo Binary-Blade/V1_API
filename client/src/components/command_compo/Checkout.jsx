@@ -3,23 +3,24 @@ import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import { Button } from '@mui/material';
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(
+  'pk_test_51NPmMYGehlD30RMlr8EutLTSTKG5UWCGCltQvcO15NlXTax06cN5KpOTtjatz2EigqNojKRQeHkjvKUMWKHwgAih00D1Ux5Ebv'
+);
 
 const Checkout = ({ cartId }) => {
-  const stripePromise = loadStripe(
-    'pk_test_51NPmMYGehlD30RMlr8EutLTSTKG5UWCGCltQvcO15NlXTax06cN5KpOTtjatz2EigqNojKRQeHkjvKUMWKHwgAih00D1Ux5Ebv'
-  );
-
-  const handleClick = async (event) => {
+  const handleCheckout = async (event) => {
     event.preventDefault();
 
     try {
       const token = localStorage.getItem('token');
-
-      const res = await axios.post(
-        `http://127.0.0.1:8000/api_v1/products/checkout-session/${cartId}`,
-        {},
+      // Create an order
+      const orderResponse = await axios.post(
+        `http://127.0.0.1:8000/api_v1/cart/order`,
+        {
+          stripeToken:
+            'pk_test_51NPmMYGehlD30RMlr8EutLTSTKG5UWCGCltQvcO15NlXTax06cN5KpOTtjatz2EigqNojKRQeHkjvKUMWKHwgAih00D1Ux5Ebv', // replace with your actual stripe token
+          cart: { id: cartId },
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,7 +28,17 @@ const Checkout = ({ cartId }) => {
         }
       );
 
-      const session = res.data.session.id; // Change this line
+      // Get checkout session
+      const sessionResponse = await axios.get(
+        `http://127.0.0.1:8000/api_v1/cart/orderDetails/${cartId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const session = sessionResponse.data.session.id;
       const stripe = await stripePromise;
       const result = await stripe.redirectToCheckout({ sessionId: session });
 
@@ -49,7 +60,7 @@ const Checkout = ({ cartId }) => {
   };
 
   return (
-    <Button variant="contained" color="primary" onClick={handleClick}>
+    <Button variant="contained" color="primary" onClick={handleCheckout}>
       Checkout
     </Button>
   );

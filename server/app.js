@@ -27,6 +27,7 @@ const adminRouter = require('./routes/adminRoutes');
 const userRouter = require('./routes/userRoutes');
 const farmRouter = require('./routes/farmRoutes');
 const productRouter = require('./routes/productRoutes');
+const orderRouter = require('./routes/orderRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const buyerRouter = require('./routes/buyerRoutes');
 
@@ -77,6 +78,7 @@ app.use('/api_v1/users', userRouter);
 app.use('/api_v1/myaccount', buyerRouter);
 app.use('/api_v1/farms', farmRouter);
 app.use('/api_v1/products', productRouter);
+app.use('/api_v1/cart', orderRouter);
 app.use('/api_v1/reviews', reviewRouter);
 
 // Then the catch-all middleware goes here

@@ -28,14 +28,11 @@ const CartPage = () => {
     const fetchCart = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(
-          `http://127.0.0.1:8000/api_v1/products/cart`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const res = await axios.get(`http://127.0.0.1:8000/api_v1/cart`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setCartItems(res.data.data.cart.products);
         setCartId(res.data.data.cart._id);
@@ -52,14 +49,11 @@ const CartPage = () => {
   const deleteItem = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(
-        `http://127.0.0.1:8000/api_v1/products/cart/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`http://127.0.0.1:8000/cart/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       // Remove the deleted item from the cartItems state
       setCartItems(cartItems.filter((item) => item.product._id !== productId));

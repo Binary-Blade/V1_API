@@ -7,21 +7,6 @@ const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
 
-router
-  .route('/cart')
-  .get(authController.protect, cartController.getCart)
-  .post(authController.protect, cartController.addToCart);
-
-router
-  .route('/cart/:productId')
-  .delete(authController.protect, cartController.deleteProductFromCartById);
-
-router.post(
-  '/checkout-session/:cartId',
-  authController.protect,
-  paymentController.getCheckoutSession
-);
-
 router.use('/:productId/reviews', reviewRouter);
 // router.use(authController.protect);
 

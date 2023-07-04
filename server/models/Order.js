@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const orderSchema = new mongoose.Schema(
   {
-    consumer: {
+    buyer: {
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
