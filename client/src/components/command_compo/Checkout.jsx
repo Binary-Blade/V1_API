@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+// Fichier Checkout.jsx
+import React, { useState } from 'react';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
 import { Button } from '@mui/material';
@@ -8,18 +9,18 @@ const stripePromise = loadStripe(
 );
 
 const Checkout = ({ cartId }) => {
-  const handleCheckout = async (event) => {
+  const [orderId, setOrderId] = useState(null);
+
+  const handleClick = async (event) => {
     event.preventDefault();
 
     try {
       const token = localStorage.getItem('token');
-      // Create an order
+
       const orderResponse = await axios.post(
-        `http://127.0.0.1:8000/api_v1/cart/order`,
+        `http://127.0.0.1:8000/api_v1/cart/create`,
         {
-          stripeToken:
-            'pk_test_51NPmMYGehlD30RMlr8EutLTSTKG5UWCGCltQvcO15NlXTax06cN5KpOTtjatz2EigqNojKRQeHkjvKUMWKHwgAih00D1Ux5Ebv', // replace with your actual stripe token
-          cart: { id: cartId },
+          cart: cartId,
         },
         {
           headers: {
@@ -28,9 +29,14 @@ const Checkout = ({ cartId }) => {
         }
       );
 
-      // Get checkout session
-      const sessionResponse = await axios.get(
-        `http://127.0.0.1:8000/api_v1/cart/orderDetails/${cartId}`,
+      setOrderId(orderResponse.data.data.order._id);
+
+      const sessionResponse = await axios.post(
+        `http://127.0.0.1:8000/api_v1/cart/checkout-session/${orderId}`,
+        {
+          stripeToken:
+            'pk_test_51NPmMYGehlD30RMlr8EutLTSTKG5UWCGCltQvcO15NlXTax06cN5KpOTtjatz2EigqNojKRQeHkjvKUMWKHwgAih00D1Ux5Ebv',
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -60,7 +66,7 @@ const Checkout = ({ cartId }) => {
   };
 
   return (
-    <Button variant="contained" color="primary" onClick={handleCheckout}>
+    <Button variant="contained" color="primary" onClick={handleClick}>
       Checkout
     </Button>
   );

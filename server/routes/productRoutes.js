@@ -1,8 +1,5 @@
 const express = require('express');
 const productController = require('../controllers/productController');
-const cartController = require('../controllers/cartController');
-const paymentController = require('../controllers/paymentController');
-const authController = require('../controllers/authController');
 const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();

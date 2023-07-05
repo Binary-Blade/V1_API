@@ -1,3 +1,4 @@
+// Fichier CartPage.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
@@ -14,15 +15,17 @@ import {
   ListItem,
   ListItemText,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Checkout from './Checkout'; // import the Checkout component
+import Checkout from './Checkout';
 
 const CartPage = () => {
+  const { orderId } = useParams();
   const [cartItems, setCartItems] = useState([]);
-  const [cartId, setCartId] = useState(null); // Add this line to create a new state for the cart id
+  const [cartId, setCartId] = useState(null);
   const [totalCost, setTotalCost] = useState(0);
+  const [orderDetails, setOrderDetails] = useState(null);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -36,7 +39,6 @@ const CartPage = () => {
 
         setCartItems(res.data.data.cart.products);
         setCartId(res.data.data.cart._id);
-        // Set the total cost of the cart here
         setTotalCost(res.data.data.cart.totalCost);
       } catch (err) {
         console.error(err);
@@ -44,7 +46,29 @@ const CartPage = () => {
     };
 
     fetchCart();
-  }, []);
+
+    if (orderId) {
+      const fetchOrderDetails = async () => {
+        try {
+          const token = localStorage.getItem('token');
+          const res = await axios.get(
+            `http://127.0.0.1:8000/api_v1/cart/${orderId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          setOrderDetails(res.data.data.order);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      fetchOrderDetails();
+    }
+  }, [orderId]);
 
   const deleteItem = async (productId) => {
     try {

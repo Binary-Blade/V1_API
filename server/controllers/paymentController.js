@@ -8,7 +8,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const cart = await Cart.findOne({ user: req.user.id }).populate(
     'products.product'
   );
-  console.log(cart);
 
   if (!cart) {
     return res.status(400).json({
@@ -47,6 +46,12 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     line_items: line_items,
   });
 
+  // Replace {CHECKOUT_SESSION_ID} with session.id in the success_url
+  session.success_url = session.success_url.replace(
+    '{CHECKOUT_SESSION_ID}',
+    session.id
+  );
+
   // Save the session ID to the database
   const payment = new Payment({
     user: req.user.id,
@@ -68,3 +73,34 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     session,
   });
 });
+
+exports.handlePaymentConfirmation = async (req, res) => {
+  // After you received payment confirmation from Stripe
+  const orderId = req.body.orderId; // Assuming orderId is sent in request body
+  const paymentStatus = req.body.paymentStatus; // Assuming paymentStatus is sent in request body
+
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'No order found with that ID',
+      });
+    }
+    order.statusDelivery =
+      paymentStatus === 'paid' ? 'processing' : 'cancelled';
+    await order.save();
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        order,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: error.message,
+    });
+  }
+};

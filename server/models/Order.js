@@ -22,7 +22,7 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
-    status: {
+    statusDelivery: {
       type: String,
       enum: ['placed', 'shipped', 'delivered', 'cancelled'],
       default: 'placed',
@@ -32,11 +32,10 @@ const orderSchema = new mongoose.Schema(
       type: {
         type: String,
         enum: ['credit_card', 'debit_card', 'paypal', 'bank_transfer'],
-        required: true,
       },
       status: {
         type: String,
-        enum: ['pending', 'paid', 'failed'],
+        enum: ['pending', 'processing', 'completed', 'cancelled', 'paid'], // Ajoutez 'paid' ici
         default: 'pending',
       },
     },

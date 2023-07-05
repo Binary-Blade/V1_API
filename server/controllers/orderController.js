@@ -1,63 +1,58 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Order = require('../models/Order');
+const Cart = require('../models/CartModel');
 const catchAsync = require('../utils/catchAsync');
 
 exports.createOrder = async (req, res) => {
-  const { stripeToken, cart } = req.body;
+  const { products, trackingInfo, paymentInfo } = req.body;
 
-  // Create a charge using Stripe
-  const charge = await stripe.charges.create({
-    amount: cart.total * 100,
-    currency: 'usd',
-    source: stripeToken, // Use the Stripe token from the client
-    description: 'Order payment',
-  });
+  try {
+    let newOrder = new Order({
+      buyer: req.user.id,
+      products,
+      trackingInfo,
+      paymentInfo,
+      statusDelivery: 'placed', // Here is where you define the initial statusDelivery
+    });
 
-  // Create an order in your database
-  const newOrder = new Order({
-    buyer: req.user._id,
-    products: cart.products,
-    paymentInfo: {
-      type: 'credit_card',
-      status: 'paid',
-    },
-    // other fields...
-  });
+    newOrder = await newOrder.save();
 
-  newOrder.save((err, order) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: 'Server error' });
-    }
-    res.status(200).json({ message: 'Order created successfully', order });
-  });
+    res.status(201).json({
+      status: 'success',
+      data: {
+        order: newOrder,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      message: error.message,
+    });
+  }
 };
+//... Rest of your order controller code
 
 exports.getOrderDetails = catchAsync(async (req, res) => {
-  const { orderId } = req.params;
+  console.log('req.params:', req.params);
+  console.log('req.query:', req.query);
+  const { cartId } = req.params;
   const { session_id } = req.query;
+  const cart = await Cart.findById(cartId).populate('products.product');
 
-  // Get order details from the database
-  const order = await Order.findById(orderId).populate('products.product');
-
-  if (!order) {
+  if (!cart) {
     return res.status(404).json({
       status: 'fail',
-      message: 'No order found with that ID',
+      message: 'No cart found with that ID',
     });
   }
 
   res.status(200).json({
-    orderId,
+    cartId,
     session_id,
-    // Add a check for orderNumber here once it's included in your schema
-    orderNumber: order.orderNumber ? order.orderNumber : 'Not available',
-    date: order.date,
-    products: order.products.map((p) => ({
+    products: cart.products.map((p) => ({
       name: p.product.name,
       pricePerKg: p.product.pricePerKg,
       quantity: p.quantity,
     })),
-    total: order.total,
+    total: cart.total,
   });
 });

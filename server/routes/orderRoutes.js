@@ -3,7 +3,6 @@ const router = express.Router();
 const cartController = require('../controllers/cartController');
 const authController = require('../controllers/authController');
 const orderController = require('../controllers/orderController');
-
 const paymentController = require('../controllers/paymentController');
 
 router
@@ -21,7 +20,10 @@ router.post(
   paymentController.getCheckoutSession
 );
 
-router.route('/order').post(orderController.createOrder);
-router.get('/orderDetails/:orderId', orderController.getOrderDetails);
+router
+  .route('/create')
+  .post(authController.protect, orderController.createOrder);
+
+router.route('/orderDetails/:orderId').get(orderController.getOrderDetails);
 
 module.exports = router;
