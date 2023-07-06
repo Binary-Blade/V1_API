@@ -16,6 +16,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkout from './Checkout';
@@ -26,25 +27,26 @@ const CartPage = () => {
   const [cartId, setCartId] = useState(null);
   const [totalCost, setTotalCost] = useState(0);
   const [orderDetails, setOrderDetails] = useState(null);
+  const navigate = useNavigate();
+
+  const fetchCart = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(`http://127.0.0.1:8000/api_v1/cart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCartItems(res.data.data.cart.products);
+      setCartId(res.data.data.cart._id);
+      setTotalCost(res.data.data.cart.totalCost);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const res = await axios.get(`http://127.0.0.1:8000/api_v1/cart`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setCartItems(res.data.data.cart.products);
-        setCartId(res.data.data.cart._id);
-        setTotalCost(res.data.data.cart.totalCost);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
     fetchCart();
 
     if (orderId) {
@@ -73,14 +75,13 @@ const CartPage = () => {
   const deleteItem = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://127.0.0.1:8000/cart/${productId}`, {
+      await axios.delete(`http://127.0.0.1:8000/api_v1/cart/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      // Remove the deleted item from the cartItems state
-      setCartItems(cartItems.filter((item) => item.product._id !== productId));
+      fetchCart();
     } catch (err) {
       console.error(err);
     }
@@ -113,7 +114,6 @@ const CartPage = () => {
                   >
                     <DeleteIcon />
                   </IconButton>
-                  {/* Pass productId as prop to Checkout component */}
                 </ListItem>
               ))}
             </List>

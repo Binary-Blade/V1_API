@@ -1,76 +1,111 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Cart = require('../models/CartModel');
+const Product = require('../models/ProductModel.js');
+const Order = require('../models/Order');
 const Payment = require('../models/Payment');
 const catchAsync = require('../utils/catchAsync');
 
-exports.getCheckoutSession = catchAsync(async (req, res, next) => {
-  // 1) Get the current user's cart
-  const cart = await Cart.findOne({ user: req.user.id }).populate(
-    'products.product'
-  );
+exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
+  const cartId = req.params.cartId;
+  const cart = await Cart.findById(cartId);
 
+  // Return error if cart does not exist
   if (!cart) {
+    return res.status(404).send({ error: 'Cart not found' });
+  }
+
+  // Return error if cart is empty
+  if (cart.products.length === 0) {
     return res.status(400).json({
       status: 'fail',
       message: 'No products in cart',
     });
   }
 
-  // 2) Create line_items array for the checkout session
-  const line_items = cart.products.map((item) => {
+  // Fetch product data for each product in the cart
+  const productIds = cart.products.map((product) => product.product);
+  const products = await Product.find({ _id: { $in: productIds } });
+
+  // Create a map of product ID to product data for easy access
+  const productData = products.reduce((map, product) => {
+    map[product._id.toString()] = product;
+    return map;
+  }, {});
+
+  let totalPrice = 0;
+  cart.products.forEach((product) => {
+    const productDetails = productData[product.product.toString()];
+    console.log('productDetails.price:', productDetails.pricePerKg);
+    totalPrice += productDetails.pricePerKg * product.quantity;
+  });
+
+  // Arrondir le total à deux décimales
+  totalPrice = parseFloat(totalPrice.toFixed(2));
+
+  // Create order from the cart
+  const order = await Order.create({
+    buyer: req.user.id,
+    products: cart.products,
+    totalPrice: totalPrice,
+    statusDelivery: 'placed',
+    paymentInfo: {
+      type: 'stripe',
+      status: 'pending',
+    },
+  });
+
+  // Convert each product in the cart to a Stripe line item
+  const lineItems = cart.products.map((product) => {
+    const productDetails = productData[product.product.toString()];
+    console.log('product.price:', product.price);
     return {
       price_data: {
         currency: 'usd',
         product_data: {
-          name: item.product.name,
-          description: item.product.description,
+          name: productDetails.name,
+          description: productDetails.description,
           metadata: {
-            productId: item.product._id.toString(),
+            productId: product.product.toString(),
           },
         },
-        unit_amount: Math.round(item.product.pricePerKg * 100),
+        unit_amount: Math.round(product.price * 100), // Stripe expects amounts in cents
       },
-      quantity: item.quantity,
+      quantity: product.quantity,
     };
   });
+  console.log(JSON.stringify(cart.products, null, 2));
 
-  // 3) Create checkout session
-  const session = await stripe.checkout.sessions.create({
+  // Create a checkout session with Stripe
+  const stripeSession = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
+    line_items: lineItems,
     mode: 'payment',
     success_url: `${req.protocol}://${req.get(
       'host'
-    )}/api_v1/cart/orderDetails/${cart.id}?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${req.protocol}://${req.get('host')}/cards`,
-    customer_email: req.user.email,
-    line_items: line_items,
+    )}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${req.protocol}://${req.get('host')}/cancel`,
   });
 
-  // Replace {CHECKOUT_SESSION_ID} with session.id in the success_url
-  session.success_url = session.success_url.replace(
-    '{CHECKOUT_SESSION_ID}',
-    session.id
-  );
-
-  // Save the session ID to the database
-  const payment = new Payment({
+  // Create a new payment record
+  const newPayment = new Payment({
     user: req.user.id,
-    order: cart.id,
-    amount: session.amount_total,
+    order: order._id,
+    amount: stripeSession.amount_total,
     paymentMethod: 'stripe',
     paymentStatus: 'pending',
-    stripeSessionId: session.id, // Add this field to your Payment model
+    stripeSessionId: stripeSession.id,
   });
-  await payment.save();
+  await newPayment.save();
 
   // Set cart status to "processing"
   cart.status = 'processing';
   await cart.save();
 
-  // 4) Create session as response
+  // Send back the session ID and order ID
   res.status(200).json({
     status: 'success',
-    session,
+    session: stripeSession.id,
+    order: order._id,
   });
 });
 

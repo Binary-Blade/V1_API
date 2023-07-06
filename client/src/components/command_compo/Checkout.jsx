@@ -1,4 +1,3 @@
-// Fichier Checkout.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { loadStripe } from '@stripe/stripe-js';
@@ -13,12 +12,12 @@ const Checkout = ({ cartId }) => {
 
   const handleClick = async (event) => {
     event.preventDefault();
-
+    console.log('cartId:', cartId);
     try {
       const token = localStorage.getItem('token');
 
       const orderResponse = await axios.post(
-        `http://127.0.0.1:8000/api_v1/cart/create`,
+        `http://127.0.0.1:8000/api_v1/cart/checkout-session/${cartId}`,
         {
           cart: cartId,
         },
@@ -29,24 +28,12 @@ const Checkout = ({ cartId }) => {
         }
       );
 
-      setOrderId(orderResponse.data.data.order._id);
+      setOrderId(orderResponse.data.order._id);
 
-      const sessionResponse = await axios.post(
-        `http://127.0.0.1:8000/api_v1/cart/checkout-session/${orderId}`,
-        {
-          stripeToken:
-            'pk_test_51NPmMYGehlD30RMlr8EutLTSTKG5UWCGCltQvcO15NlXTax06cN5KpOTtjatz2EigqNojKRQeHkjvKUMWKHwgAih00D1Ux5Ebv',
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const session = sessionResponse.data.session.id;
       const stripe = await stripePromise;
-      const result = await stripe.redirectToCheckout({ sessionId: session });
+      const result = await stripe.redirectToCheckout({
+        sessionId: orderResponse.data.session,
+      });
 
       if (result.error) {
         alert(result.error.message);

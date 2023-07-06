@@ -17,7 +17,7 @@ router
 router.post(
   '/checkout-session/:cartId',
   authController.protect,
-  paymentController.getCheckoutSession
+  paymentController.generateCheckoutSession
 );
 
 router

@@ -34,25 +34,25 @@ exports.createOrder = async (req, res) => {
 exports.getOrderDetails = catchAsync(async (req, res) => {
   console.log('req.params:', req.params);
   console.log('req.query:', req.query);
-  const { cartId } = req.params;
+  const { orderId } = req.params;
   const { session_id } = req.query;
-  const cart = await Cart.findById(cartId).populate('products.product');
+  const order = await Order.findById(orderId).populate('products.product');
 
-  if (!cart) {
+  if (!order) {
     return res.status(404).json({
       status: 'fail',
-      message: 'No cart found with that ID',
+      message: 'No order found with that ID',
     });
   }
 
   res.status(200).json({
-    cartId,
+    orderId,
     session_id,
-    products: cart.products.map((p) => ({
+    products: order.products.map((p) => ({
       name: p.product.name,
-      pricePerKg: p.product.pricePerKg,
+      price: p.product.price,
       quantity: p.quantity,
     })),
-    total: cart.total,
+    total: order.total,
   });
 });

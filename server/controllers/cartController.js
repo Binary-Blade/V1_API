@@ -1,5 +1,5 @@
 const Cart = require('../models/CartModel');
-const Order = require('../models/Order');
+const Product = require('../models/ProductModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -10,11 +10,18 @@ exports.addToCart = catchAsync(async (req, res, next) => {
   if (!cart) {
     cart = await Cart.create({ user: req.user.id });
   }
-
+  // Get product price
+  const product = await Product.findById(req.body.product);
+  if (!product) {
+    return next(new AppError('Product not found', 404));
+  }
+  const productPrice = product.pricePerKg;
   // Check if product is already in cart, increment quantity if so
   const productIndex = cart.products.findIndex(
     (item) => item.product.toString() === req.body.product
   );
+  console.log('product:', product);
+  console.log('req.body.product:', req.body.product);
 
   if (productIndex > -1) {
     if (
@@ -29,8 +36,14 @@ exports.addToCart = catchAsync(async (req, res, next) => {
     }
   } else {
     // Otherwise, add new product to cart
-    cart.products.push({ product: req.body.product, quantity: 1 });
+    cart.products.push({
+      product: req.body.product,
+      quantity: 1,
+      price: productPrice,
+    });
   }
+  // Add the product price to the total price of the cart
+  cart.totalPrice += productPrice;
 
   await cart.save();
 
@@ -77,6 +90,10 @@ exports.deleteProductFromCartById = catchAsync(async (req, res, next) => {
     return next(new AppError('No product found in the cart', 404));
   }
 
+  // Get product price from the product in the cart
+  const productPrice = cart.products[productIndex].price;
+  const productQuantity = cart.products[productIndex].quantity;
+
   // Remove the product from the cart
   cart.products.splice(productIndex, 1);
 
@@ -90,6 +107,8 @@ exports.deleteProductFromCartById = catchAsync(async (req, res, next) => {
     });
   }
 
+  // Subtract the product price from the total price of the cart
+  cart.totalPrice -= productPrice * productQuantity;
   await cart.save();
 
   res.status(204).json({

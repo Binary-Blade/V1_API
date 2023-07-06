@@ -20,8 +20,16 @@ const orderSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
+        price: {
+          type: Number,
+          required: true,
+        },
       },
     ],
+    totalPrice: {
+      type: Number,
+      default: 0,
+    },
     statusDelivery: {
       type: String,
       enum: ['placed', 'shipped', 'delivered', 'cancelled'],
@@ -31,7 +39,13 @@ const orderSchema = new mongoose.Schema(
     paymentInfo: {
       type: {
         type: String,
-        enum: ['credit_card', 'debit_card', 'paypal', 'bank_transfer'],
+        enum: [
+          'credit_card',
+          'debit_card',
+          'paypal',
+          'bank_transfer',
+          'stripe',
+        ], // Ajoutez 'stripe' ici
       },
       status: {
         type: String,
