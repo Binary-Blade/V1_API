@@ -17,6 +17,10 @@ const paymentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  stripeSessionId: {
+    type: String,
+    required: [true, 'A payment must have a Stripe session ID'],
+  },
   paymentMethod: {
     type: String,
     enum: ['credit_card', 'debit_card', 'paypal', 'bank_transfer', 'stripe'],

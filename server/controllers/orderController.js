@@ -1,37 +1,36 @@
 const Order = require('../models/Order');
-const Cart = require('../models/CartModel');
 const catchAsync = require('../utils/catchAsync');
 
-exports.createOrder = async (req, res) => {
-  const { products, trackingInfo, paymentInfo } = req.body;
+// exports.createOrder = async (req, res) => {
+//   const { products, trackingInfo, paymentInfo } = req.body;
 
-  try {
-    let newOrder = new Order({
-      buyer: req.user.id,
-      products,
-      trackingInfo,
-      paymentInfo,
-      statusDelivery: 'placed', // Here is where you define the initial statusDelivery
-    });
+//   try {
+//     let newOrder = new Order({
+//       buyer: req.user.id,
+//       products,
+//       trackingInfo,
+//       paymentInfo,
+//       statusDelivery: 'placed', // Here is where you define the initial statusDelivery
+//     });
 
-    newOrder = await newOrder.save();
+//     newOrder = await newOrder.save();
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        order: newOrder,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
-      status: 'fail',
-      message: error.message,
-    });
-  }
-};
+//     res.status(201).json({
+//       status: 'success',
+//       data: {
+//         order: newOrder,
+//       },
+//     });
+//   } catch (error) {
+//     res.status(400).json({
+//       status: 'fail',
+//       message: error.message,
+//     });
+//   }
+// };
 //... Rest of your order controller code
 
-exports.getOrderDetails = catchAsync(async (req, res) => {
+/*exports.getOrderDetails = catchAsync(async (req, res) => {
   console.log('req.params:', req.params);
   console.log('req.query:', req.query);
   const { orderId } = req.params;
@@ -55,4 +54,4 @@ exports.getOrderDetails = catchAsync(async (req, res) => {
     })),
     total: order.total,
   });
-});
+}); */

@@ -35,7 +35,6 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
   let totalPrice = 0;
   cart.products.forEach((product) => {
     const productDetails = productData[product.product.toString()];
-    console.log('productDetails.price:', productDetails.pricePerKg);
     totalPrice += productDetails.pricePerKg * product.quantity;
   });
 
@@ -57,7 +56,7 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
   // Convert each product in the cart to a Stripe line item
   const lineItems = cart.products.map((product) => {
     const productDetails = productData[product.product.toString()];
-    console.log('product.price:', product.price);
+
     return {
       price_data: {
         currency: 'usd',
@@ -73,17 +72,14 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
       quantity: product.quantity,
     };
   });
-  console.log(JSON.stringify(cart.products, null, 2));
 
   // Create a checkout session with Stripe
   const stripeSession = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: `${req.protocol}://${req.get(
-      'host'
-    )}/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${req.protocol}://${req.get('host')}/cancel`,
+    success_url: `http://localhost:5173/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:5173/cancel`,
   });
 
   // Create a new payment record
@@ -109,33 +105,58 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.handlePaymentConfirmation = async (req, res) => {
-  // After you received payment confirmation from Stripe
-  const orderId = req.body.orderId; // Assuming orderId is sent in request body
-  const paymentStatus = req.body.paymentStatus; // Assuming paymentStatus is sent in request body
+exports.handleSuccess = async (req, res) => {
+  console.log('req.query:', req.query);
+  const sessionId = req.query.session_id;
+  console.log('session_id:', sessionId);
 
-  try {
-    const order = await Order.findById(orderId);
-    if (!order) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'No order found with that ID',
-      });
-    }
-    order.statusDelivery =
-      paymentStatus === 'paid' ? 'processing' : 'cancelled';
-    await order.save();
+  // Retrieve the session from Stripe
+  const stripeSession = await stripe.checkout.sessions.retrieve(sessionId);
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        order,
-      },
-    });
-  } catch (error) {
-    res.status(400).json({
+  if (!stripeSession) {
+    return res.status(404).json({
       status: 'fail',
-      message: error.message,
+      message: 'No stripe session found with that ID',
     });
   }
+
+  // Retrieve the payment record from the database using the stripe session ID
+  const payment = await Payment.findOne({ stripeSessionId: sessionId });
+
+  if (!payment) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'No payment found with that stripe session ID',
+    });
+  }
+
+  // Update the payment status
+  payment.paymentStatus = stripeSession.payment_status;
+
+  await payment.save();
+
+  // Retrieve the order from the database using the payment record
+  const order = await Order.findById(payment.order);
+  if (!order) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'No order found with that ID',
+    });
+  }
+
+  // Update the order statusDelivery depending on the payment status
+  order.paymentInfo.status =
+    stripeSession.payment_status === 'paid' ? 'processing' : 'cancelled';
+
+  await order.save();
+
+  // Send back the updated order and payment information
+  res.status(200).json({
+    status: 'success',
+    data: {
+      order,
+      payment,
+    },
+    orderDetails: order, // Add this line
+  });
 };

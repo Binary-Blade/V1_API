@@ -30,11 +30,6 @@ const orderSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    statusDelivery: {
-      type: String,
-      enum: ['placed', 'shipped', 'delivered', 'cancelled'],
-      default: 'placed',
-    },
     trackingInfo: String,
     paymentInfo: {
       type: {

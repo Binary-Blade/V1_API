@@ -1,15 +1,17 @@
 // AgriFlow/server/routes/paymentRoutes.js
 const express = require('express');
-const stripeWebhooks = require('../controllers/stripeWebhooks');
+
+const paymentController = require('../controllers/paymentController');
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
 router.post(
-  '/api_v1/webhooks/stripe',
-  stripe.webhooks.handle(
-    'checkout.session.completed',
-    stripeWebhooks.handleCheckoutSessionCompleted
-  )
+  '/checkout-session/:cartId',
+  authController.protect,
+  paymentController.generateCheckoutSession
 );
+
+router.get('/success', paymentController.handleSuccess);
 
 module.exports = router;

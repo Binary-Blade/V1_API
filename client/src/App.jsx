@@ -11,7 +11,7 @@ import Login from './pages/Login';
 import MyCards from './pages/MyCards';
 import Validation from './components/command_compo/comandvalidation';
 import Payment from './pages/Payment';
-import OrderDetails from './components/command_compo/OrderDetail';
+import OrderSuccess from './components/command_compo/OrderDetail';
 import Contact from './pages/Contact';
 import Farmers from './page_later/Farmers';
 import Checkout from './pages/Checkout';
@@ -26,7 +26,6 @@ export default function MyApp() {
             <Route path="login" element={<Login />} />
             <Route path="homepage" element={<Homepage />} />
             <Route path="products" element={<ProductFarmer />} />
-
             {/* GET FARMER => PRODUCT */}
             {/* <Route path="farmers" element={<Farmers />} />
             <Route path="farmers/:farmId/products" element={<ProductPage />} />
@@ -36,10 +35,12 @@ export default function MyApp() {
             /> */}
             {/* BUY PRODUCT */}
             <Route path="cards" element={<MyCards />} />
+            <Route
+              path="payment/success/:sessionId"
+              element={<OrderSuccess />}
+            />
             <Route path="checkout" element={<Checkout />} />
             <Route path="payment" element={<Payment />} />
-            <Route path="validation" element={<Validation />} />
-            <Route path="orderdetails" element={<OrderDetails />} />
             <Route path="contact" element={<Contact />} />
           </Routes>
         </BrowserRouter>

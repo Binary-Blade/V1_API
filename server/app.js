@@ -14,20 +14,22 @@ const app = express();
 
 app.use(
   cors({
-    origin: 'http://localhost:5173', // replace with the domain of your frontend application
+    origin: ['http://127.0.0.1:8000', 'http://localhost:5173'], // replace with the domains of your frontend applications
     credentials: true,
   })
 );
+
 // EXPORT
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 // ROUTES
 const adminRouter = require('./routes/adminRoutes');
+const paymentRouter = require('./routes/paymentRoutes');
 const userRouter = require('./routes/userRoutes');
 const farmRouter = require('./routes/farmRoutes');
 const productRouter = require('./routes/productRoutes');
-const orderRouter = require('./routes/orderRoutes');
+const cartRouter = require('./routes/cartRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const buyerRouter = require('./routes/buyerRoutes');
 
@@ -73,12 +75,13 @@ app.use((req, res, next) => {
 });
 
 // Routes use
+app.use('/api_v1/payment', paymentRouter);
 app.use('/api_v1/admin', adminRouter);
 app.use('/api_v1/users', userRouter);
 app.use('/api_v1/myaccount', buyerRouter);
 app.use('/api_v1/farms', farmRouter);
 app.use('/api_v1/products', productRouter);
-app.use('/api_v1/cart', orderRouter);
+app.use('/api_v1/cart', cartRouter);
 app.use('/api_v1/reviews', reviewRouter);
 
 // Then the catch-all middleware goes here

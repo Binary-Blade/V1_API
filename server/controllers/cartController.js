@@ -20,9 +20,6 @@ exports.addToCart = catchAsync(async (req, res, next) => {
   const productIndex = cart.products.findIndex(
     (item) => item.product.toString() === req.body.product
   );
-  console.log('product:', product);
-  console.log('req.body.product:', req.body.product);
-
   if (productIndex > -1) {
     if (
       cart.products[productIndex] &&
@@ -59,7 +56,6 @@ exports.getCart = catchAsync(async (req, res, next) => {
   const cart = await Cart.findOne({ user: req.user.id }).populate(
     'products.product'
   );
-  console.log(req.user.id);
 
   if (!cart) {
     return next(new AppError('No cart found for this user', 404));
