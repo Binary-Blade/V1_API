@@ -11,7 +11,7 @@ import Login from './pages/Login';
 import MyCards from './pages/MyCards';
 import Validation from './components/command_compo/comandvalidation';
 import Payment from './pages/Payment';
-import OrderSuccess from './components/command_compo/OrderDetail';
+import OrderDetail from './components/command_compo/OrderDetail';
 import Contact from './pages/Contact';
 import Farmers from './page_later/Farmers';
 import Checkout from './pages/Checkout';
@@ -36,9 +36,10 @@ export default function MyApp() {
             {/* BUY PRODUCT */}
             <Route path="cards" element={<MyCards />} />
             <Route
-              path="payment/success/:sessionId"
-              element={<OrderSuccess />}
+              path="/payment/success/:session_id"
+              element={<OrderDetail />}
             />
+            {/* other routes... */}
             <Route path="checkout" element={<Checkout />} />
             <Route path="payment" element={<Payment />} />
             <Route path="contact" element={<Contact />} />

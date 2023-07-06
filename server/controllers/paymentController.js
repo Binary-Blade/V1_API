@@ -78,8 +78,10 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: `http://localhost:5173/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:5173/cancel`,
+    success_url: `${req.protocol}://${req.get(
+      'host'
+    )}/api_v1/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${req.protocol}://${req.get('host')}/cancel`,
   });
 
   // Create a new payment record
@@ -105,7 +107,7 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.handleSuccess = async (req, res) => {
+exports.handleSuccess = catchAsync(async (req, res) => {
   console.log('req.query:', req.query);
   const sessionId = req.query.session_id;
   console.log('session_id:', sessionId);
@@ -159,4 +161,4 @@ exports.handleSuccess = async (req, res) => {
     },
     orderDetails: order, // Add this line
   });
-};
+});
