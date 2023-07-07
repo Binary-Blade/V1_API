@@ -36,7 +36,7 @@ export default function MyApp() {
             {/* BUY PRODUCT */}
             <Route path="cards" element={<MyCards />} />
             <Route
-              path="/payment/success/:session_id"
+              path="payment/success/:session_id"
               element={<OrderDetail />}
             />
             {/* other routes... */}

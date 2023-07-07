@@ -1,59 +1,19 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const Cart = require('../models/CartModel');
-const Product = require('../models/ProductModel.js');
-const Order = require('../models/Order');
 const Payment = require('../models/Payment');
 const catchAsync = require('../utils/catchAsync');
+const paymentServices = require('../services/paymentServices');
 
 exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
-  const cartId = req.params.cartId;
-  const cart = await Cart.findById(cartId);
+  const { cartId } = req.params;
+  const { id: userId } = req.user;
+  const { cart, productData } = await paymentServices.processCart(cartId);
 
-  // Return error if cart does not exist
-  if (!cart) {
-    return res.status(404).send({ error: 'Cart not found' });
-  }
-
-  // Return error if cart is empty
-  if (cart.products.length === 0) {
-    return res.status(400).json({
-      status: 'fail',
-      message: 'No products in cart',
-    });
-  }
-
-  // Fetch product data for each product in the cart
-  const productIds = cart.products.map((product) => product.product);
-  const products = await Product.find({ _id: { $in: productIds } });
-
-  // Create a map of product ID to product data for easy access
-  const productData = products.reduce((map, product) => {
-    map[product._id.toString()] = product;
-    return map;
-  }, {});
-
-  let totalPrice = 0;
-  cart.products.forEach((product) => {
-    const productDetails = productData[product.product.toString()];
-    totalPrice += productDetails.pricePerKg * product.quantity;
+  const order = await paymentServices.createOrder({
+    cart,
+    productData,
+    buyerId: userId,
   });
 
-  // Arrondir le total à deux décimales
-  totalPrice = parseFloat(totalPrice.toFixed(2));
-
-  // Create order from the cart
-  const order = await Order.create({
-    buyer: req.user.id,
-    products: cart.products,
-    totalPrice: totalPrice,
-    statusDelivery: 'placed',
-    paymentInfo: {
-      type: 'stripe',
-      status: 'pending',
-    },
-  });
-
-  // Convert each product in the cart to a Stripe line item
   const lineItems = cart.products.map((product) => {
     const productDetails = productData[product.product.toString()];
 
@@ -73,7 +33,6 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
     };
   });
 
-  // Create a checkout session with Stripe
   const stripeSession = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: lineItems,
@@ -84,9 +43,8 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
     cancel_url: `${req.protocol}://${req.get('host')}/cancel`,
   });
 
-  // Create a new payment record
   const newPayment = new Payment({
-    user: req.user.id,
+    user: userId,
     order: order._id,
     amount: stripeSession.amount_total,
     paymentMethod: 'stripe',
@@ -95,11 +53,9 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
   });
   await newPayment.save();
 
-  // Set cart status to "processing"
   cart.status = 'processing';
   await cart.save();
 
-  // Send back the session ID and order ID
   res.status(200).json({
     status: 'success',
     session: stripeSession.id,
@@ -108,11 +64,8 @@ exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
 });
 
 exports.handleSuccess = catchAsync(async (req, res) => {
-  console.log('req.query:', req.query);
-  const sessionId = req.query.session_id;
-  console.log('session_id:', sessionId);
+  const { session_id: sessionId } = req.query;
 
-  // Retrieve the session from Stripe
   const stripeSession = await stripe.checkout.sessions.retrieve(sessionId);
 
   if (!stripeSession) {
@@ -122,7 +75,6 @@ exports.handleSuccess = catchAsync(async (req, res) => {
     });
   }
 
-  // Retrieve the payment record from the database using the stripe session ID
   const payment = await Payment.findOne({ stripeSessionId: sessionId });
 
   if (!payment) {
@@ -132,12 +84,9 @@ exports.handleSuccess = catchAsync(async (req, res) => {
     });
   }
 
-  // Update the payment status
   payment.paymentStatus = stripeSession.payment_status;
-
   await payment.save();
 
-  // Retrieve the order from the database using the payment record
   const order = await Order.findById(payment.order);
   if (!order) {
     return res.status(404).json({
@@ -146,19 +95,17 @@ exports.handleSuccess = catchAsync(async (req, res) => {
     });
   }
 
-  // Update the order statusDelivery depending on the payment status
   order.paymentInfo.status =
     stripeSession.payment_status === 'paid' ? 'processing' : 'cancelled';
 
   await order.save();
 
-  // Send back the updated order and payment information
   res.status(200).json({
     status: 'success',
     data: {
       order,
       payment,
     },
-    orderDetails: order, // Add this line
+    orderDetails: order,
   });
 });

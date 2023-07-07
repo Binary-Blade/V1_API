@@ -75,13 +75,30 @@ const CartPage = () => {
   const deleteItem = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://127.0.0.1:8000/api_v1/cart/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const productToDelete = cartItems.find(
+        (item) => item.product._id === productId
+      );
 
-      fetchCart();
+      if (productToDelete) {
+        const costToRemove =
+          productToDelete.product.pricePerKg * productToDelete.quantity;
+
+        await axios.delete(`http://127.0.0.1:8000/api_v1/cart/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Update the local state as well
+        setCartItems((prevItems) =>
+          prevItems.filter((item) => item.product._id !== productId)
+        );
+
+        // Update total cost
+        setTotalCost((prevCost) => prevCost - costToRemove);
+      } else {
+        throw new Error('Product to delete not found in the cart');
+      }
     } catch (err) {
       console.error(err);
     }
