@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; // Importer useContext
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../context/authContext'; // Importer AuthContext
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -11,6 +12,8 @@ const Signup = () => {
     role: '',
   });
   const navigate = useNavigate();
+
+  const { setAuthToken } = useContext(AuthContext); // Obtenir setAuthToken depuis le contexte
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,7 +41,7 @@ const Signup = () => {
       console.log('Response data:', response.data);
 
       if (response.status === 201) {
-        localStorage.setItem('token', response.data.token);
+        setAuthToken(response.data.token); // Utiliser setAuthToken depuis le contexte
         navigate('/homepage'); // Redirect to home page or dashboard
       } else {
         console.error('Error during registration', response.data);

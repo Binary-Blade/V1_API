@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react'; // Importer useContext
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import {
@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { AuthContext } from '../../context/authContext'; // Importer AuthContext
 
 const LabelIcon = {
   'Euro-Leaf': <FastfoodIcon />,
@@ -32,9 +33,10 @@ const ProductPage = () => {
   const [cartCount, setCartCount] = useState(0);
   const [products, setProducts] = useState([]);
 
+  const { authToken } = useContext(AuthContext); // Obtenir le token depuis le contexte
+
   const handleAddToCart = async (productId) => {
     try {
-      const token = localStorage.getItem('token');
       await axios.post(
         `http://127.0.0.1:8000/api_v1/cart`,
         {
@@ -42,7 +44,7 @@ const ProductPage = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${authToken}`, // Utiliser le token depuis le contexte
           },
         }
       );
@@ -50,16 +52,12 @@ const ProductPage = () => {
       setCartCount((prevCount) => prevCount + 1);
     } catch (err) {
       if (err.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         console.log(err.response.data);
         console.log(err.response.status);
         console.log(err.response.headers);
       } else if (err.request) {
-        // The request was made but no response was received
         console.log(err.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.log('Error', err.message);
       }
     }
@@ -67,10 +65,9 @@ const ProductPage = () => {
 
   const getProducts = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(`http://127.0.0.1:8000/api_v1/products`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`, // Utiliser le token depuis le contexte
         },
       });
 

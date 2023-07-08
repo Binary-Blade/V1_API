@@ -1,5 +1,5 @@
 // Fichier CartPage.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import {
   Container,
@@ -20,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkout from './Checkout';
+import { AuthContext } from '../../context/authContext'; // importer AuthContext
 
 const CartPage = () => {
   const { orderId } = useParams();
@@ -29,12 +30,13 @@ const CartPage = () => {
   const [orderDetails, setOrderDetails] = useState(null);
   const navigate = useNavigate();
 
+  const { authToken } = useContext(AuthContext); // obtenir le token à partir du contexte
+
   const fetchCart = async () => {
     try {
-      const token = localStorage.getItem('token');
       const res = await axios.get(`http://127.0.0.1:8000/api_v1/cart`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${authToken}`,
         },
       });
 
@@ -52,12 +54,11 @@ const CartPage = () => {
     if (orderId) {
       const fetchOrderDetails = async () => {
         try {
-          const token = localStorage.getItem('token');
           const res = await axios.get(
             `http://127.0.0.1:8000/api_v1/cart/${orderId}`,
             {
               headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${authToken}`,
               },
             }
           );
@@ -70,11 +71,10 @@ const CartPage = () => {
 
       fetchOrderDetails();
     }
-  }, [orderId]);
+  }, [orderId, authToken]); // inclure le token comme dépendance
 
   const deleteItem = async (productId) => {
     try {
-      const token = localStorage.getItem('token');
       const productToDelete = cartItems.find(
         (item) => item.product._id === productId
       );
@@ -85,7 +85,7 @@ const CartPage = () => {
 
         await axios.delete(`http://127.0.0.1:8000/api_v1/cart/${productId}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${authToken}`, // Utiliser le token à partir du contexte
           },
         });
 

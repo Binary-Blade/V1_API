@@ -1,13 +1,15 @@
-// LoginPage.js
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography, Container } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/authContext'; // Importer AuthContext
 
 export default function LoginPage() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const { setAuthToken } = useContext(AuthContext); // Utiliser le setter du token depuis le contexte
+
   const onSubmit = async (data) => {
     try {
       const response = await axios({
@@ -20,6 +22,7 @@ export default function LoginPage() {
       });
 
       if (response.data.status === 'success') {
+        setAuthToken(response.data.token); // Utiliser le setter pour mettre à jour le token dans le contexte
         // replace the current page in the history stack and navigate to homepage
         navigate('/homepage', { replace: 'true' });
       }

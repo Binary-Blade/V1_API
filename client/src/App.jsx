@@ -14,37 +14,40 @@ import Payment from './pages/Payment';
 import OrderDetail from './components/command_compo/OrderDetail';
 import Contact from './pages/Contact';
 import Farmers from './page_later/Farmers';
+import { AuthProvider } from './context/authContext';
 import Checkout from './pages/Checkout';
 
 export default function MyApp() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="signup" element={<Signup />} />
-            <Route path="login" element={<Login />} />
-            <Route path="homepage" element={<Homepage />} />
-            <Route path="products" element={<ProductFarmer />} />
-            {/* GET FARMER => PRODUCT */}
-            {/* <Route path="farmers" element={<Farmers />} />
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="signup" element={<Signup />} />
+              <Route path="login" element={<Login />} />
+              <Route path="homepage" element={<Homepage />} />
+              <Route path="products" element={<ProductFarmer />} />
+              {/* GET FARMER => PRODUCT */}
+              {/* <Route path="farmers" element={<Farmers />} />
             <Route path="farmers/:farmId/products" element={<ProductPage />} />
             <Route
               path="farmers/:farmId/products/:idProduct"
               element={<ProductDetail />}
             /> */}
-            {/* BUY PRODUCT */}
-            <Route path="cards" element={<MyCards />} />
-            <Route
-              path="payment/success/:session_id"
-              element={<OrderDetail />}
-            />
-            {/* other routes... */}
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="payment" element={<Payment />} />
-            <Route path="contact" element={<Contact />} />
-          </Routes>
-        </BrowserRouter>
+              {/* BUY PRODUCT */}
+              <Route path="cards" element={<MyCards />} />
+              <Route
+                path="payment/success/:session_id"
+                element={<OrderDetail />}
+              />
+              {/* other routes... */}
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="payment" element={<Payment />} />
+              <Route path="contact" element={<Contact />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
       </ThemeProvider>
     </>
   );
