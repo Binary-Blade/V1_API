@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -12,9 +12,11 @@ import {
   MenuItem,
   Container,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import { AuthContext } from '../context/authContext';
 import theme from '../ui/theme';
+import Cookies from 'js-cookie';
 
 const pages = ['Homepage', 'Farmers', 'Products', 'Contact'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -22,12 +24,20 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const { authToken, removeAuthToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
 
   const handleCloseNavMenu = () => setAnchorElNav(null);
-  const handleCloseUserMenu = () => setAnchorElUser(null);
+  const handleCloseUserMenu = (event) => {
+    if (event.currentTarget.textContent === 'Logout') {
+      removeAuthToken();
+      navigate('/login'); // This will bring you back to the homepage after logout
+    }
+    setAnchorElUser(null);
+  };
 
   return (
     <AppBar

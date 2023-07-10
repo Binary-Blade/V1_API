@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- SEO : Les méta tags viewport et charset sont importants pour le SEO, ils permettent respectivement un affichage correct sur tous les appareils et une bonne prise en compte des caractères spéciaux -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- SEO : Les méta tags description et keywords sont importants pour le SEO, ils permettent de fournir une description précise du contenu de la page aux moteurs de recherche -->
+    <meta
+      name="description"
+      content="Synthwave Services par SynthWaver, votre source de mélodies des années 80 avec une touche moderne."
+    />
+    <meta
+      name="keywords"
+      content="Synthwave, SynthWaver, Services, Musique, Design sonore, Consultation"
+    />
+
+    <title>Synthwave Services | SynthWaver</title>
+
+    <!-- Accessibilité : Les fichiers CSS externes sont chargés dans l'en-tête pour assurer un chargement fluide et rapide de la page -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <!-- SEO : Les liens ont des href remplis pour une meilleure navigation et SEO -->
+        <a class="navbar-brand" href="index.html">SynthWaver</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Accessibilité : Les menus de navigation utilisent des listes pour une meilleure compréhension par les lecteurs d'écran -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="about.html">À propos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="services.html">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contact.html">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-fluid">
+      <!-- SEO : Les balises H1 et H2 sont utilisées pour structurer le contenu et améliorer le SEO -->
+      <div class="jumbotron text-center">
+        <h1 class="display-4">Bienvenue dans le monde de SynthWaver</h1>
+        <p class="lead">
+          Découvrez les mélodies des années 80 avec une touche moderne. Plongez
+          dans la synthwave.
+        </p>
+      </div>
+
+      <div class="container">
+        <h2 class="text-center">Projets récents</h2>
+
+        <!-- Accessibilité : Utilisation de l'attribut aria-label pour décrire le carrousel aux utilisateurs de lecteurs d'écran -->
+        <div
+          id="carouselExampleIndicators"
+          class="carousel slide"
+          data-ride="carousel"
+          aria-label="Projets récents"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <h3>"Ondes Rétro"</h3>
+              <p>...</p>
+            </div>
+           
+          </div>
+        </div>
+
+        <h2 class="text-center">Nos Services</h2>
+        <!-- etc. -->
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-dark text-center text-white">
+      <div class="container">
+        <!-- Accessibilité : Les informations de copyright sont incluses dans le pied de page pour une meilleure accessibilité -->
+        <span>© 2023 SynthWaver. Tous droits réservés.</span>
+      </div>
+    </footer>
+  </body>
+</html>

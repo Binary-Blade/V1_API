@@ -4,6 +4,7 @@ const authController = require('../controllers/authController');
 
 // 3) ROUTES
 const router = express.Router();
+// Création d'un nouvel objet routeur à partir de l'objet express.
 
 router.post('/signup', authController.signup);
 
@@ -15,9 +16,10 @@ router.use(authController.protect);
 router.patch('/completeRegistration', authController.completeRegistration);
 
 router.patch('/updatePassword', authController.updatePassword);
+module.exports = router;
 
 router.get('/me', userController.getMe, userController.getUser);
 router.patch('/updateMe', userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
-module.exports = router;
+

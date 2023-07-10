@@ -23,7 +23,7 @@ app.use(
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
-// ROUTES
+// IMPORTING ROUTES
 const adminRouter = require('./routes/adminRoutes');
 const paymentRouter = require('./routes/paymentRoutes');
 const userRouter = require('./routes/userRoutes');

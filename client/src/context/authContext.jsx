@@ -1,12 +1,12 @@
 // context/authContext.js
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [authToken, setAuthToken] = useState(Cookies.get('jwt')); // Get initial token from cookies
+  const [authToken, setAuthToken] = useState(Cookies.get('jwt') || null); // Get initial token from cookies or set to null
 
   const getAuthToken = async (email, password) => {
     try {
@@ -29,12 +29,32 @@ export const AuthProvider = ({ children }) => {
     Cookies.set('jwt', token, { expires: 7 }); // Store token in a cookie
     setAuthToken(token); // And in state
   };
+  const removeAuthToken = () => {
+    Cookies.remove('jwt'); // Remove the token from the cookie
+    setAuthToken(null); // And remove it from state
+  };
 
   return (
     <AuthContext.Provider
-      value={{ authToken, getAuthToken, setAuthToken: saveAuthToken }}
+      value={{
+        user: Boolean(authToken),
+        authToken,
+        getAuthToken,
+        setAuthToken: saveAuthToken,
+        removeAuthToken,
+      }}
     >
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return context || { user: null, setAuthToken: () => {} };
 };
