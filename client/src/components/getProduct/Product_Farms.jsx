@@ -17,6 +17,7 @@ import {
   Badge,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet'; // Importer Helmet
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -89,6 +90,10 @@ const ProductPage = () => {
 
   return (
     <Container>
+       <Helmet>
+            <title>Nos produits - AgriFlow</title>
+            <meta name="description" content="Découvrez nos produits sur AgriFlow." />
+        </Helmet>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

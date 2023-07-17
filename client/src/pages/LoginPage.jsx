@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import axios from 'axios';
+import api from './../api/api'; // Import the API instance
 import { useForm } from 'react-hook-form';
 import { TextField, Button, Typography, Container } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,14 +12,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios({
-        method: 'POST',
-        url: 'http://localhost:8000/api_v1/users/login', // replace with your API endpoint
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: data,
-      });
+      const response = await api.post('/users/login', data);
 
       if (response.data.status === 'success') {
         setAuthToken(response.data.token); // Utiliser le setter pour mettre à jour le token dans le contexte

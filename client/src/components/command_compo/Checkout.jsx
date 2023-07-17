@@ -10,7 +10,6 @@ const stripePromise = loadStripe(
 
 const Checkout = ({ cartId }) => {
   const [orderId, setOrderId] = useState(null);
-
   const { authToken } = useContext(AuthContext); // Obtenir le token depuis le contexte
 
   const handleClick = async (event) => {
@@ -28,31 +27,18 @@ const Checkout = ({ cartId }) => {
           },
         }
       );
-
       setOrderId(orderResponse.data.order._id);
-
       const stripe = await stripePromise;
       const result = await stripe.redirectToCheckout({
         sessionId: orderResponse.data.session,
       });
-
       if (result.error) {
         alert(result.error.message);
       }
     } catch (err) {
-      if (err.response) {
-        console.log(err.response.data);
-        console.log(err.response.status);
-        console.log(err.response.headers);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log('Error', err.message);
-      }
-      console.log(err.config);
+      console.error(err);
     }
   };
-
   return (
     <Button variant="contained" color="primary" onClick={handleClick}>
       Checkout

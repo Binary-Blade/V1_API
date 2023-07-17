@@ -101,7 +101,16 @@ exports.completeRegistration = catchAsync(async (req, res, next) => {
     },
   });
 });
-
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+  // ...
+});
 // Route handler for login
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -137,8 +146,10 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('You are not logged in! Please log in to get access', 401)
     );
   }
+
   // Verify the token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
   // Check if the user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
@@ -150,6 +161,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       )
     );
   }
+
   // Check if the user changed their password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
     console.log('Password changed');
@@ -157,6 +169,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('User recently changed password! Please log in again.', 401)
     );
   }
+
   // Grant access to the protected route
   req.user = currentUser;
   console.log('User authenticated');
@@ -253,21 +266,3 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   createSendToken(user, 200, res);
 });
-
-
-
-let token;
-if (
-  req.headers.authorization &&
-  req.headers.authorization.startsWith('Bearer')
-) {
-  token = req.headers.authorization.split(' ')[1];
-}
-if (!token) {
-  console.log('No token found');
-  return next(
-    new AppError('You are not logged in! Please log in to get access', 401)
-  );
-}
-// Ici, on vérifie si un jeton est présent dans les en-têtes de la requête.
-
