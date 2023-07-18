@@ -23,6 +23,7 @@ import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AuthContext } from '../../context/authContext'; // Importer AuthContext
 
+
 const LabelIcon = {
   'Euro-Leaf': <FastfoodIcon />,
   Organic: <LocalPizzaIcon />,
@@ -96,7 +97,7 @@ const ProductPage = () => {
         </Helmet>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h2" component="div" sx={{ flexGrow: 1 }}>
             Our Products
           </Typography>
           <Button component={Link} to="/cards" color="inherit">
@@ -108,9 +109,6 @@ const ProductPage = () => {
         </Toolbar>
       </AppBar>
       <Box sx={{ my: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Our Products
-        </Typography>
         <Grid container spacing={3}>
           {products.map((product) => (
             <Grid item xs={12} sm={6} md={4} key={product._id}>

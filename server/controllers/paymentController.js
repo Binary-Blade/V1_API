@@ -2,6 +2,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Payment = require('../models/Payment');
 const catchAsync = require('../utils/catchAsync');
 const paymentServices = require('../services/paymentServices');
+const Order = require('../models/Order');
 
 exports.generateCheckoutSession = catchAsync(async (req, res, next) => {
   const { cartId } = req.params;

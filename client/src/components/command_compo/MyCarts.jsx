@@ -21,6 +21,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkout from './Checkout';
 import { AuthContext } from '../../context/authContext'; // importer AuthContext
+import theme from '../../ui/theme'; // Ajoutez cette ligne
 
 const CartPage = () => {
   const { orderId } = useParams();
@@ -107,7 +108,7 @@ const CartPage = () => {
   return (
     <Container>
       <Box my={4}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom sx={{color: theme.palette.title.primary}}>
           Shopping Cart
         </Typography>
 
@@ -128,6 +129,7 @@ const CartPage = () => {
                     edge="end"
                     aria-label="delete"
                     onClick={() => deleteItem(item.product._id)}
+                    sx={{color: theme.palette.title.primary}}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -139,7 +141,7 @@ const CartPage = () => {
           <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6">
+                <Typography variant="h6" sx={{color: theme.palette.title.primary}}>
                   Total: ${totalCost.toFixed(2)}
                 </Typography>
               </CardContent>
@@ -151,7 +153,7 @@ const CartPage = () => {
         </Grid>
       </Box>
       <Box mb={4}>
-        <Button component={Link} to="/products" startIcon={<ArrowBackIcon />}>
+        <Button component={Link} to="/products" startIcon={<ArrowBackIcon />} sx={{color: theme.palette.title.primary}}>
           Back to products
         </Button>
       </Box>
