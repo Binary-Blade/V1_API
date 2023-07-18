@@ -22,7 +22,7 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { AuthContext } from '../../context/authContext'; // Importer AuthContext
-
+import theme from '../../ui/theme';
 
 const LabelIcon = {
   'Euro-Leaf': <FastfoodIcon />,
@@ -91,19 +91,28 @@ const ProductPage = () => {
 
   return (
     <Container>
-       <Helmet>
-            <title>Nos produits - AgriFlow</title>
-            <meta name="description" content="Découvrez nos produits sur AgriFlow." />
-        </Helmet>
-      <AppBar position="static">
+      <Helmet>
+        <title>Nos produits - AgriFlow</title>
+        <meta
+          name="description"
+          content="Découvrez nos produits sur AgriFlow."
+        />
+      </Helmet>
+      <AppBar
+        position="static"
+        sx={{
+          bgcolor: theme.palette.background.secondary,
+          color: theme.palette.title.primary,
+        }}
+      >
         <Toolbar>
-          <Typography variant="h2" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h2" component="div" sx={{ flexGrow: 1, fontSize: '32px', fontFamily: 'monospace', }}>
             Our Products
           </Typography>
           <Button component={Link} to="/cards" color="inherit">
             Mon Panier
             <Badge badgeContent={cartCount} color="secondary">
-              <ShoppingCartIcon />
+              <ShoppingCartIcon fontSize="large" />
             </Badge>
           </Button>
         </Toolbar>
@@ -148,6 +157,10 @@ const ProductPage = () => {
                       size="small"
                       fullWidth
                       onClick={() => handleAddToCart(product._id)}
+                      sx={{
+                        bgcolor: theme.palette.background.secondary,
+                        color: theme.palette.title.primary,
+                      }}
                     >
                       Add to Cart
                     </Button>

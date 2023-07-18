@@ -1,7 +1,20 @@
-import React, { useState, useContext } from 'react'; // Importer useContext
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { AuthContext } from '../context/authContext'; // Importer AuthContext
+import { AuthContext } from '../context/authContext';
+import {
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Typography,
+  Container,
+  Box,
+  Stack,
+} from '@mui/material';
+import theme from '../ui/theme';
 
 const Signup = () => {
   const [user, setUser] = useState({
@@ -12,8 +25,7 @@ const Signup = () => {
     role: '',
   });
   const navigate = useNavigate();
-
-  const { setAuthToken } = useContext(AuthContext); // Obtenir setAuthToken depuis le contexte
+  const { setAuthToken } = useContext(AuthContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -41,8 +53,8 @@ const Signup = () => {
       console.log('Response data:', response.data);
 
       if (response.status === 201) {
-        setAuthToken(response.data.token); // Utiliser setAuthToken depuis le contexte
-        navigate('/homepage'); // Redirect to home page or dashboard
+        setAuthToken(response.data.token);
+        navigate('/homepage');
       } else {
         console.error('Error during registration', response.data);
       }
@@ -52,45 +64,109 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={user.name}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={user.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={user.password}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="passwordConfirm"
-          placeholder="Confirm Password"
-          value={user.passwordConfirm}
-          onChange={handleChange}
-        />
-        <select name="role" value={user.role} onChange={handleChange}>
-          <option value="">Select Role</option>
-          <option value="buyer">Buyer</option>
-          <option value="farmer">Farmer</option>
-        </select>
-        <button type="submit">Register</button>
-      </form>
-    </div>
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{
+            fontSize: '32px',
+            mr: 2,
+            display: { xs: 'none', md: 'flex' },
+            fontFamily: 'monospace',
+            fontWeight: 700,
+            letterSpacing: '.3rem',
+            color: theme.palette.title.primary,
+            textDecoration: 'none',
+          }}
+        >
+  
+          Sign Up
+        </Typography>
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoFocus
+            value={user.name}
+            onChange={handleChange}
+            
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            value={user.email}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={user.password}
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="passwordConfirm"
+            label="Confirm Password"
+            type="password"
+            id="passwordConfirm"
+            autoComplete="current-password"
+            value={user.passwordConfirm}
+            onChange={handleChange}
+          />
+          <FormControl fullWidth margin="normal" variant="outlined">
+            <InputLabel id="role-label">Role</InputLabel>
+            <Select
+              labelId="role-label"
+              id="role"
+              name="role"
+              value={user.role}
+              onChange={handleChange}
+              label="Role"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value="buyer">Buyer</MenuItem>
+              <MenuItem value="farmer">Farmer</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Register
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

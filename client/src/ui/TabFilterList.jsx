@@ -20,7 +20,7 @@ export default function FilterList({ value, filters, filterLabels }) {
 
   return value !== 0 ? (
     <Box sx={{ width: '100%', marginBottom: 2 }}>
-      <Typography variant="h6">
+      <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontFamily: 'monospace', }}>
         Filtres pour{filterLabels[value - 1]}:
       </Typography>
       <Autocomplete

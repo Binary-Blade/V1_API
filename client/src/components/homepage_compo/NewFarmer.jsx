@@ -16,22 +16,22 @@ export default function ResponsiveGrid() {
     {
       name: 'Ferme du Soleil Levant',
       description: 'Une description de la Ferme du Soleil Levant.',
-      imagePath: 'imgPath1.png', // ajoutez votre propre chemin d'image ici
+      imagePath: 'https://images.unsplash.com/photo-1500770974080-d3bdfbae9994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80', // ajoutez votre propre chemin d'image ici
     },
     {
       name: 'Ferme des Quatre Vents',
       description: 'Une description de la Ferme des Quatre Vents.',
-      imagePath: 'imgPath2.png', // ajoutez votre propre chemin d'image ici
+      imagePath: 'https://images.unsplash.com/photo-1500076656116-558758c991c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1771&q=80', // ajoutez votre propre chemin d'image ici
     },
     {
       name: 'Ferme de la Vallée Verdoyante',
       description: 'Une description de la Ferme de la Vallée Verdoyante.',
-      imagePath: 'imgPath3.png', // ajoutez votre propre chemin d'image ici
+      imagePath: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1774&q=80', // ajoutez votre propre chemin d'image ici
     },
     {
       name: 'Ferme du Clair de Lune',
       description: 'Une description de la Ferme du Clair de Lune.',
-      imagePath: 'imgPath4.png', // ajoutez votre propre chemin d'image ici
+      imagePath: 'https://images.unsplash.com/photo-1486754735734-325b5831c3ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80', // ajoutez votre propre chemin d'image ici
     },
   ];
 

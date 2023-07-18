@@ -108,7 +108,11 @@ const CartPage = () => {
   return (
     <Container>
       <Box my={4}>
-        <Typography variant="h4" gutterBottom sx={{color: theme.palette.title.primary}}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ color: theme.palette.title.primary }}
+        >
           Shopping Cart
         </Typography>
 
@@ -129,7 +133,7 @@ const CartPage = () => {
                     edge="end"
                     aria-label="delete"
                     onClick={() => deleteItem(item.product._id)}
-                    sx={{color: theme.palette.title.primary}}
+                    sx={{ color: theme.palette.title.primary }}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -141,11 +145,19 @@ const CartPage = () => {
           <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" sx={{color: theme.palette.title.primary}}>
+                <Typography
+                  variant="h6"
+                  sx={{ color: theme.palette.title.primary }}
+                >
                   Total: ${totalCost.toFixed(2)}
                 </Typography>
               </CardContent>
-              <CardActions>
+              <CardActions
+                sx={{
+                  bgcolor: theme.palette.background.secondary,
+                  color: theme.palette.title.primary,
+                }}
+              >
                 <Checkout cartId={cartId} />
               </CardActions>
             </Card>
@@ -153,7 +165,12 @@ const CartPage = () => {
         </Grid>
       </Box>
       <Box mb={4}>
-        <Button component={Link} to="/products" startIcon={<ArrowBackIcon />} sx={{color: theme.palette.title.primary}}>
+        <Button
+          component={Link}
+          to="/products"
+          startIcon={<ArrowBackIcon />}
+          sx={{ color: theme.palette.title.primary }}
+        >
           Back to products
         </Button>
       </Box>
@@ -162,3 +179,6 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
+
+
