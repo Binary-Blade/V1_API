@@ -6,6 +6,7 @@ Please note that the project is currently in **standby mode** and is far from co
 
 ## Technologies Used
 - **Backend**: Express.js
+- **Frontend**: React, Material UI
 
 ### Why Express.js on Backend?
 Being completely new to backend development, Express.js offered a beginner-friendly environment to get things off the ground quickly.
