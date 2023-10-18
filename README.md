@@ -1,7 +1,7 @@
 # AgriFlow: My First Full-Stack Project
 
 ## Introduction
-Welcome to AgriFlow, my inaugural project in full-stack development. I embarked on this journey with **zero prior experience in backend development** and managed to build the initial version of this project **entirely on my own in just four months**. 
+Welcome to AgriFlow, my inaugural project in full-stack development. I embarked on this journey with **zero prior experience in backend development** and managed to build the initial version of this project.
 Please note that the project is currently in **standby mode** and is far from complete.
 
 ## Technologies Used
