@@ -5,7 +5,6 @@ Welcome to AgriFlow, my inaugural project in full-stack development. I embarked 
 Please note that the project is currently in **standby mode** and is far from complete.
 
 ## Technologies Used
-- **Frontend**: React, Material UI
 - **Backend**: Express.js
 
 ### Why Express.js on Backend?
